@@ -56,12 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
     };
 
-    // Display current load
-    const updateCurrentLoad = () => {
-        const currentLoad = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
-        document.getElementById('currentLoad').textContent = `Current Grid Load: ${currentLoad} MW`;
-    };
-
     // Update charts based on the selected date range
     const updateCharts = (startDate, endDate) => {
         const labels = [];
@@ -153,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Apply date range filter
+    // Apply the date filter
     document.getElementById('applyFilter').addEventListener('click', () => {
         const startDateInput = document.getElementById('startDate').value;
         const endDateInput = document.getElementById('endDate').value;
@@ -171,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Initialize page with default values and charts
+    // Initialize page
     const initializePage = () => {
         const today = new Date();
         const oneWeekAgo = new Date(today);
@@ -183,9 +177,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateCharts(oneWeekAgo, today);
         updateClock();
         setInterval(updateClock, 1000);
-
-        updateCurrentLoad();
-        setInterval(updateCurrentLoad, 5000);
     };
 
     initializePage();
