@@ -12,16 +12,30 @@
     <!-- HEADER -->
     <header>
         <div class="header-content">
-            <h1>Electric Grid Load Projector</h1>
-            <p>Track Energy Consumption Trends and Forecasts</p>
-            <div class="controls">
-                <select id="countrySelect" class="country-select">
-                    <option value="USA">USA</option>
-                    <option value="Germany">Germany</option>
-                    <option value="India">India</option>
-                    <!-- Add more countries as needed -->
-                </select>
-                <button id="helpBtn" class="help-btn">?</button>
+            <div class="header-left">
+                <h1>Electric Grid Load Projector</h1>
+                <p>Track Energy Consumption Trends and Forecasts</p>
+            </div>
+
+            <div class="header-right">
+                <div class="controls">
+                    <select id="countrySelect" class="country-select">
+                        <option value="USA">USA</option>
+                        <option value="Germany">Germany</option>
+                        <option value="India">India</option>
+                        <!-- Add more countries here -->
+                    </select>
+                    <button id="helpBtn" class="help-btn">?</button>
+                </div>
+                <div class="customize-view">
+                    <h2>Customize View</h2>
+                    <div class="date-range">
+                        <input type="date" id="startDate">
+                        <span>to</span>
+                        <input type="date" id="endDate">
+                        <button id="applyFilter" class="apply-btn">Apply</button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -37,16 +51,6 @@
             <section id="forecast">
                 <h2>Forecasted Grid Load</h2>
                 <canvas id="forecastChart"></canvas>
-            </section>
-
-            <section id="filters">
-                <h2>Customize View</h2>
-                <div class="date-range">
-                    <input type="date" id="startDate">
-                    <span>to</span>
-                    <input type="date" id="endDate">
-                    <button id="applyFilter" class="apply-btn">Apply</button>
-                </div>
             </section>
 
             <section id="summary">
