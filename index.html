@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +9,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
+
+    <!-- Sticky Header with Navigation -->
     <header>
-        <h1>Electric Grid Load Projector</h1>
-        <p>Your interactive dashboard for visualizing energy consumption trends.</p>
-        <div id="clock"></div>
-        <div id="currentLoad"></div>
-        
-        <!-- Help Button and Country Selector next to each other -->
+        <div class="logo">
+            <h1>Electric Grid Load Projector</h1>
+            <p>Your interactive dashboard for visualizing energy consumption trends</p>
+        </div>
+
+        <!-- Header Controls -->
         <div id="headerControls">
             <button id="helpBtn">Help</button>
             <div id="countrySelector">
-                <h2>Select Country</h2>
+                <h3>Select Country</h3>
                 <select id="countrySelect">
                     <option value="USA">USA</option>
                     <option value="Germany">Germany</option>
@@ -31,7 +35,7 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Content Section -->
     <main>
         <section id="chart-section">
             <h2>Grid Load Trends</h2>
@@ -43,7 +47,7 @@
             <canvas id="forecastChart"></canvas>
         </section>
 
-        <!-- Date Filter -->
+        <!-- Date Range Filter -->
         <section id="filters">
             <h2>Customize View</h2>
             <label for="dateRange">Select Date Range:</label>
@@ -54,23 +58,23 @@
         <!-- Project Summary -->
         <section id="summary">
             <h2>Project Overview</h2>
-            <p>This project simulates grid load insights, showcasing both actual and forecasted energy consumption. You can choose the country to see specific grid load patterns based on that country's historical energy usage data.</p>
+            <p>This project simulates grid load insights, showcasing both actual and forecasted energy consumption. You can select the country to see specific grid load trends based on that country's historical energy usage data.</p>
         </section>
     </main>
 
-    <!-- Help Section (Hidden by default) -->
+    <!-- Help Modal -->
     <div id="helpModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="closeBtn">&times;</span>
             <h2>Project Help</h2>
             <p>This dashboard provides real-time and forecasted grid load data. Here's what the charts represent:</p>
             <ul>
-                <li><strong>Actual Grid Load:</strong> This represents the current energy usage of the grid, showing how much energy is being consumed at any given time.</li>
-                <li><strong>Forecasted Grid Load:</strong> This chart predicts future energy consumption based on historical data and trends.</li>
-                <li><strong>Date Range Filter:</strong> Adjust the date range to explore grid load and forecasts over different periods.</li>
-                <li><strong>Country Selector:</strong> Select the country you are interested in to visualize grid load trends specific to that country.</li>
+                <li><strong>Actual Grid Load:</strong> Represents current energy usage of the grid.</li>
+                <li><strong>Forecasted Grid Load:</strong> Predicted future energy consumption based on trends.</li>
+                <li><strong>Date Range Filter:</strong> Adjust the date range to explore grid load and forecasts.</li>
+                <li><strong>Country Selector:</strong> Choose a country to see relevant grid load patterns.</li>
             </ul>
-            <p><strong>Why is this important?</strong> Monitoring grid load helps ensure a stable energy supply and efficient energy management across different regions.</p>
+            <p><strong>Why is this important?</strong> Monitoring grid load helps ensure stable energy supply and efficient management.</p>
         </div>
     </div>
 
@@ -80,4 +84,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
