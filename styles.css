@@ -60,27 +60,40 @@ button:hover {
     margin-right: auto;
 }
 
-#summary {
+/* Country Selector */
+#helpAndCountrySection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#countrySelector {
+    text-align: center;
     background-color: #fff;
     padding: 20px;
-    margin-top: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
 }
 
-#filters, #countrySelector {
-    margin-top: 20px;
-    text-align: center;
-}
-
-/* Country Selector */
 #countrySelector select {
     padding: 10px;
     font-size: 1.2em;
-    width: 200px;
+    width: 250px;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+button#helpBtn {
+    background-color: #3498db;
+    font-size: 1.1em;
+    padding: 12px 24px;
+    transition: background-color 0.3s;
+}
+
+button#helpBtn:hover {
+    background-color: #2980b9;
 }
 
 /* Modal (Help Section) */
