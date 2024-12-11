@@ -1,23 +1,42 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Simulate realistic grid load data (with daily patterns)
+    // Help Section Modal
+    const helpBtn = document.getElementById('helpBtn');
+    const helpModal = document.getElementById('helpModal');
+    const closeBtn = document.getElementById('closeBtn');
+
+    helpBtn.addEventListener('click', function () {
+        helpModal.style.display = 'block';
+    });
+
+    closeBtn.addEventListener('click', function () {
+        helpModal.style.display = 'none';
+    });
+
+    // Click outside modal to close it
+    window.addEventListener('click', function (e) {
+        if (e.target === helpModal) {
+            helpModal.style.display = 'none';
+        }
+    });
+
+    // Function to generate realistic grid load data
     const generateRealisticGridData = (length) => {
         const data = [];
         for (let i = 0; i < length; i++) {
-            // Simulating a daily pattern (higher usage during day, lower at night)
             const hour = new Date().getHours();
-            const baseLoad = 300;  // Base load in MW
-            const dailyVariation = Math.sin((hour / 24) * Math.PI * 2) * 100;  // Simulate daily peaks and valleys
-            const load = baseLoad + dailyVariation + Math.random() * 50;  // Randomness to add variation
+            const baseLoad = 300;
+            const dailyVariation = Math.sin((hour / 24) * Math.PI * 2) * 100;
+            const load = baseLoad + dailyVariation + Math.random() * 50;
             data.push(Math.floor(load));
         }
         return data;
     };
 
-    // Simulate forecasted grid load data with some realistic variation
+    // Function to generate forecasted grid load data
     const generateForecastData = (length) => {
         const data = [];
         for (let i = 0; i < length; i++) {
-            const load = Math.floor(Math.random() * (500 - 250 + 1)) + 250;  // Forecasted load between 250 and 500 MW
+            const load = Math.floor(Math.random() * (500 - 250 + 1)) + 250;
             data.push(load);
         }
         return data;
@@ -28,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return new Date(date).toLocaleDateString();
     };
 
-    // Update the clock (shows current time)
+    // Update the clock
     const updateClock = () => {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, '0');
@@ -37,13 +56,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
     };
 
-    // Display the current grid load (latest load)
+    // Display current load
     const updateCurrentLoad = () => {
-        const currentLoad = Math.floor(Math.random() * (500 - 200 + 1)) + 200;  // Simulated current load between 200 and 500 MW
+        const currentLoad = Math.floor(Math.random() * (500 - 200 + 1)) + 200;
         document.getElementById('currentLoad').textContent = `Current Grid Load: ${currentLoad} MW`;
     };
 
-    // Update the charts with the filtered data based on the selected date range
+    // Update charts based on the selected date range
     const updateCharts = (startDate, endDate) => {
         const labels = [];
         const gridLoadData = [];
@@ -51,15 +70,15 @@ document.addEventListener('DOMContentLoaded', function () {
         
         const numDays = Math.floor((endDate - startDate) / (1000 * 3600 * 24)) + 1;
 
-        // Create labels and data for the selected date range
+        // Generate data and labels
         for (let i = 0; i < numDays; i++) {
             const currentDate = new Date(startDate.getTime() + i * (1000 * 3600 * 24));
-            labels.push(formatDate(currentDate)); // Set labels to each day's date
-            gridLoadData.push(generateRealisticGridData(1)[0]); // Simulate actual grid load data with daily patterns
-            forecastData.push(generateForecastData(1)[0]); // Simulate forecasted load data
+            labels.push(formatDate(currentDate));
+            gridLoadData.push(generateRealisticGridData(1)[0]);
+            forecastData.push(generateForecastData(1)[0]);
         }
 
-        // Grid Load Chart Update
+        // Update Grid Load Chart
         const gridLoadChart = new Chart(document.getElementById('gridLoadChart'), {
             type: 'line',
             data: {
@@ -96,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Forecasted Load Chart Update
+        // Update Forecasted Load Chart
         const forecastChart = new Chart(document.getElementById('forecastChart'), {
             type: 'line',
             data: {
@@ -134,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Apply the selected date range to update the charts
+    // Apply date range filter
     document.getElementById('applyFilter').addEventListener('click', () => {
         const startDateInput = document.getElementById('startDate').value;
         const endDateInput = document.getElementById('endDate').value;
@@ -152,28 +171,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Initialize the page with default values and charts
+    // Initialize page with default values and charts
     const initializePage = () => {
         const today = new Date();
         const oneWeekAgo = new Date(today);
-        oneWeekAgo.setDate(today.getDate() - 7);  // Default start date: 7 days ago
+        oneWeekAgo.setDate(today.getDate() - 7);
 
-        // Set default date values for the date inputs
         document.getElementById('startDate').value = oneWeekAgo.toISOString().split('T')[0];
         document.getElementById('endDate').value = today.toISOString().split('T')[0];
 
-        // Update charts with default date range (last 7 days)
         updateCharts(oneWeekAgo, today);
-
-        // Start the clock and update every second
         updateClock();
         setInterval(updateClock, 1000);
 
-        // Update current grid load every 5 seconds
         updateCurrentLoad();
         setInterval(updateCurrentLoad, 5000);
     };
 
-    // Run the initialization when the page is loaded
     initializePage();
 });
