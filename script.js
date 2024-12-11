@@ -1,15 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Function to generate random grid load data
-    const generateRandomData = (length) => {
+    // Simulate realistic grid load data (with daily patterns)
+    const generateRealisticGridData = (length) => {
         const data = [];
         for (let i = 0; i < length; i++) {
-            const load = Math.floor(Math.random() * (500 - 200 + 1)) + 200;  // Random load between 200 and 500 MW
-            data.push(load);
+            // Simulating a daily pattern (higher usage during day, lower at night)
+            const hour = new Date().getHours();
+            const baseLoad = 300;  // Base load in MW
+            const dailyVariation = Math.sin((hour / 24) * Math.PI * 2) * 100;  // Simulate daily peaks and valleys
+            const load = baseLoad + dailyVariation + Math.random() * 50;  // Randomness to add variation
+            data.push(Math.floor(load));
         }
         return data;
     };
 
-    // Function to generate forecasted grid load data
+    // Simulate forecasted grid load data with some realistic variation
     const generateForecastData = (length) => {
         const data = [];
         for (let i = 0; i < length; i++) {
@@ -19,12 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return data;
     };
 
-    // Function to format the date for chart labels
+    // Format date for chart labels
     const formatDate = (date) => {
         return new Date(date).toLocaleDateString();
     };
 
-    // Function to update the clock every second
+    // Update the clock (shows current time)
     const updateClock = () => {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, '0');
@@ -33,7 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
     };
 
-    // Function to update the charts with the selected date range
+    // Display the current grid load (latest load)
+    const updateCurrentLoad = () => {
+        const currentLoad = Math.floor(Math.random() * (500 - 200 + 1)) + 200;  // Simulated current load between 200 and 500 MW
+        document.getElementById('currentLoad').textContent = `Current Grid Load: ${currentLoad} MW`;
+    };
+
+    // Update the charts with the filtered data based on the selected date range
     const updateCharts = (startDate, endDate) => {
         const labels = [];
         const gridLoadData = [];
@@ -41,15 +51,15 @@ document.addEventListener('DOMContentLoaded', function () {
         
         const numDays = Math.floor((endDate - startDate) / (1000 * 3600 * 24)) + 1;
 
-        // Generate labels and data for the selected date range
+        // Create labels and data for the selected date range
         for (let i = 0; i < numDays; i++) {
             const currentDate = new Date(startDate.getTime() + i * (1000 * 3600 * 24));
-            labels.push(formatDate(currentDate));  // Set labels to each day's date
-            gridLoadData.push(generateRandomData(1)[0]);  // Simulate actual grid load data
-            forecastData.push(generateForecastData(1)[0]);  // Simulate forecasted load data
+            labels.push(formatDate(currentDate)); // Set labels to each day's date
+            gridLoadData.push(generateRealisticGridData(1)[0]); // Simulate actual grid load data with daily patterns
+            forecastData.push(generateForecastData(1)[0]); // Simulate forecasted load data
         }
 
-        // Create or update the Actual Grid Load Chart
+        // Grid Load Chart Update
         const gridLoadChart = new Chart(document.getElementById('gridLoadChart'), {
             type: 'line',
             data: {
@@ -86,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Create or update the Forecasted Grid Load Chart
+        // Forecasted Load Chart Update
         const forecastChart = new Chart(document.getElementById('forecastChart'), {
             type: 'line',
             data: {
@@ -124,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Event listener for Apply Filter button
+    // Apply the selected date range to update the charts
     document.getElementById('applyFilter').addEventListener('click', () => {
         const startDateInput = document.getElementById('startDate').value;
         const endDateInput = document.getElementById('endDate').value;
@@ -142,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Function to initialize the page with default values and charts
+    // Initialize the page with default values and charts
     const initializePage = () => {
         const today = new Date();
         const oneWeekAgo = new Date(today);
@@ -152,12 +162,16 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('startDate').value = oneWeekAgo.toISOString().split('T')[0];
         document.getElementById('endDate').value = today.toISOString().split('T')[0];
 
-        // Update charts with the default date range (last 7 days)
+        // Update charts with default date range (last 7 days)
         updateCharts(oneWeekAgo, today);
 
         // Start the clock and update every second
         updateClock();
         setInterval(updateClock, 1000);
+
+        // Update current grid load every 5 seconds
+        updateCurrentLoad();
+        setInterval(updateCurrentLoad, 5000);
     };
 
     // Run the initialization when the page is loaded
