@@ -7,36 +7,30 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f0f5;
+    background-color: #f4f4f9;
     color: #333;
     line-height: 1.6;
-    padding: 20px;
 }
 
 header {
-    text-align: center;
-    background-color: #34495e;
+    background: linear-gradient(90deg, #1abc9c, #16a085);
     color: white;
     padding: 20px;
-    border-radius: 8px;
-    position: relative;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+header .logo h1 {
     font-size: 2.5em;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-h2 {
-    font-size: 1.8em;
-    margin-top: 20px;
-    text-align: center;
-}
-
-#clock, #currentLoad {
-    font-size: 1.2em;
-    margin-top: 10px;
-    text-align: center;
+header .logo p {
+    font-size: 1.1em;
+    margin-top: 5px;
 }
 
 #headerControls {
@@ -47,97 +41,61 @@ h2 {
     margin-top: 20px;
 }
 
-/* Help Button */
-button {
-    background-color: #1abc9c;
+#headerControls button, #headerControls select {
+    background-color: #34495e;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 1em;
-    margin-top: 10px;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #16a085;
-}
-
-#applyFilter {
-    margin-top: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Country Selector */
-#countrySelector {
-    text-align: center;
-    background-color: #fff;
-    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
-#countrySelector select {
-    padding: 10px;
-    font-size: 1.2em;
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+#headerControls button:hover, #headerControls select:hover {
+    background-color: #1abc9c;
 }
 
-/* Modal (Help Section) */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    padding-top: 60px;
+h2, h3 {
+    color: #34495e;
+    margin-bottom: 15px;
+    font-size: 1.8em;
 }
 
-.modal-content {
-    background-color: #fff;
-    margin: 5% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    text-align: left;
+/* Layout Styling */
+main {
+    max-width: 1200px;
+    margin: 20px auto;
 }
 
-.close-btn {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 25px;
-    cursor: pointer;
+#chart-section, #forecast-section {
+    margin-top: 40px;
+    text-align: center;
 }
 
-.close-btn:hover,
-.close-btn:focus {
-    color: black;
-    text-decoration: none;
+canvas {
+    max-width: 100%;
+    height: 400px;
+    margin-top: 30px;
 }
 
-ul {
-    list-style: none;
-    padding-left: 0;
-    margin-top: 20px;
+#filters {
+    text-align: center;
+    margin-top: 40px;
 }
 
-ul li {
-    margin-bottom: 10px;
+#filters button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
 }
 
-ul li strong {
-    color: #1abc9c;
+#filters button:hover {
+    background-color: #16a085;
 }
 
 footer {
@@ -146,14 +104,83 @@ footer {
     color: #7f8c8d;
 }
 
-/* Chart Section */
-#chart-section, #forecast-section {
-    margin-top: 20px;
-    text-align: center;
+/* Modal Styling (Help Section) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 200;
+    padding-top: 50px;
 }
 
-canvas {
-    max-width: 100%;
-    height: 400px;
-    margin-top: 20px;
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 700px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.close-btn {
+    font-size: 2em;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #34495e;
+}
+
+/* Country Selector */
+#countrySelector {
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 200px;
+}
+
+#countrySelector select {
+    font-size: 1.1em;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 15px;
+    }
+
+    #headerControls {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    canvas {
+        height: 300px;
+    }
 }
