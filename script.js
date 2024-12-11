@@ -1,7 +1,7 @@
 // Wait until the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-    // Simulate random data for grid load and forecast
+    // Function to simulate random data (between 200 and 500 MW)
     const generateRandomData = (length) => {
         const data = [];
         for (let i = 0; i < length; i++) {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Date(date).toLocaleDateString();
     };
 
-    // Update the clock every second
+    // Update the clock every second (digital style)
     const updateClock = () => {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, '0');
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Update Grid Load Chart
-        const gridLoadChart = new Chart(document.getElementById('gridLoadChart'), {
+        new Chart(document.getElementById('gridLoadChart'), {
             type: 'line',
             data: {
                 labels: labels,
@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     label: 'Actual Grid Load (MW)',
                     data: gridLoadData,
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    fill: false,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
                     tension: 0.1
                 }]
             },
@@ -60,13 +61,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: {
                         display: true,
                         text: 'Actual Grid Load Over Time'
+                    },
+                    tooltip: {
+                        enabled: true,
+                        mode: 'index',
+                        intersect: false
                     }
                 }
             }
         });
 
         // Update Forecast Chart
-        const forecastChart = new Chart(document.getElementById('forecastChart'), {
+        new Chart(document.getElementById('forecastChart'), {
             type: 'line',
             data: {
                 labels: labels,
@@ -74,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     label: 'Forecasted Grid Load (MW)',
                     data: forecastData,
                     borderColor: 'rgba(255, 99, 132, 1)',
-                    fill: false,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
                     tension: 0.1
                 }]
             },
@@ -84,13 +91,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: {
                         display: true,
                         text: 'Forecasted Grid Load Over Time'
+                    },
+                    tooltip: {
+                        enabled: true,
+                        mode: 'index',
+                        intersect: false
                     }
                 }
             }
         });
     };
 
-    // Handle the Apply Filter button
+    // Handle the Apply Filter button click
     document.getElementById('applyFilter').addEventListener('click', () => {
         const startDateInput = document.getElementById('startDate').value;
         const endDateInput = document.getElementById('endDate').value;
@@ -114,11 +126,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const oneWeekAgo = new Date(today);
         oneWeekAgo.setDate(today.getDate() - 7);
 
-        // Set the default date range
+        // Set default date range
         document.getElementById('startDate').value = oneWeekAgo.toISOString().split('T')[0];
         document.getElementById('endDate').value = today.toISOString().split('T')[0];
 
-        // Initialize charts with the default date range (last 7 days)
+        // Initialize charts with default date range (last 7 days)
         updateCharts(oneWeekAgo, today);
 
         // Start the clock
