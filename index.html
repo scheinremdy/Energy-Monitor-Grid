@@ -14,7 +14,21 @@
         <p>Your interactive dashboard for visualizing energy consumption trends.</p>
         <div id="clock"></div>
         <div id="currentLoad"></div>
-        <button id="helpBtn">Help</button>
+        
+        <!-- Help Button and Country Selector next to each other -->
+        <div id="headerControls">
+            <button id="helpBtn">Help</button>
+            <div id="countrySelector">
+                <h2>Select Country</h2>
+                <select id="countrySelect">
+                    <option value="USA">USA</option>
+                    <option value="Germany">Germany</option>
+                    <option value="India">India</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Australia">Australia</option>
+                </select>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -35,21 +49,6 @@
             <label for="dateRange">Select Date Range:</label>
             <input type="date" id="startDate"> to <input type="date" id="endDate">
             <button id="applyFilter">Apply</button>
-        </section>
-
-        <!-- Help and Country Selector -->
-        <section id="helpAndCountrySection">
-            <div id="countrySelector">
-                <h2>Select Country</h2>
-                <select id="countrySelect">
-                    <option value="USA">USA</option>
-                    <option value="Germany">Germany</option>
-                    <option value="India">India</option>
-                    <option value="Japan">Japan</option>
-                    <option value="Australia">Australia</option>
-                </select>
-            </div>
-            <button id="helpBtn">Help</button>
         </section>
 
         <!-- Project Summary -->
