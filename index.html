@@ -12,30 +12,32 @@
 <header>
     <h1>Electric Grid Load Projector</h1>
     <p>Visualizing Energy Consumption Trends and Insights</p>
-    <div id="clock"></div>
+    <div id="clock" class="digital-clock"></div>
 </header>
 
 <main>
-    <section id="chart-section">
+    <section id="chart-section" class="card">
         <h2>Grid Load Trends</h2>
         <canvas id="gridLoadChart"></canvas>
     </section>
 
-    <section id="forecast-section">
+    <section id="forecast-section" class="card">
         <h2>Forecasted Energy Consumption</h2>
         <canvas id="forecastChart"></canvas>
     </section>
 
-    <section id="filters">
+    <section id="filters" class="card">
         <h2>Customize View</h2>
-        <label for="startDate">Select Date Range:</label>
-        <input type="date" id="startDate"> to <input type="date" id="endDate">
-        <button id="applyFilter">Apply</button>
+        <div class="filter-container">
+            <label for="startDate">Select Date Range:</label>
+            <input type="date" id="startDate"> to <input type="date" id="endDate">
+            <button id="applyFilter">Apply</button>
+        </div>
     </section>
 
-    <section id="summary">
+    <section id="summary" class="card">
         <h2>Project Summary</h2>
-        <p>This project simulates advanced energy grid load insights with predictive analytics and customizable views.</p>
+        <p>This project simulates advanced energy grid load insights with predictive analytics and customizable views. It demonstrates real-world application of data visualization technologies and interactivity.</p>
     </section>
 </main>
 
