@@ -6,45 +6,45 @@
     <title>Electric Grid Load Projector</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Electric Grid Load Projector</h1>
+        <p>Advanced Visualizations for Energy Consumption Insights</p>
+        <div id="clock" class="digital-clock"></div>
+    </header>
 
-<header>
-    <h1>Electric Grid Load Projector</h1>
-    <p>Visualizing Energy Consumption Trends and Insights</p>
-    <div id="clock" class="digital-clock"></div>
-</header>
+    <main>
+        <section id="chart-section" class="card">
+            <h2>Grid Load Trends</h2>
+            <canvas id="gridLoadChart"></canvas>
+        </section>
 
-<main>
-    <section id="chart-section" class="card">
-        <h2>Grid Load Trends</h2>
-        <canvas id="gridLoadChart"></canvas>
-    </section>
+        <section id="forecast-section" class="card">
+            <h2>Forecasted Energy Consumption</h2>
+            <canvas id="forecastChart"></canvas>
+        </section>
 
-    <section id="forecast-section" class="card">
-        <h2>Forecasted Energy Consumption</h2>
-        <canvas id="forecastChart"></canvas>
-    </section>
+        <section id="filters" class="card">
+            <h2>Customize View</h2>
+            <div class="filter-container">
+                <label for="startDate">Select Date Range:</label>
+                <input type="date" id="startDate"> to <input type="date" id="endDate">
+                <button id="applyFilter">Apply</button>
+            </div>
+        </section>
 
-    <section id="filters" class="card">
-        <h2>Customize View</h2>
-        <div class="filter-container">
-            <label for="startDate">Select Date Range:</label>
-            <input type="date" id="startDate"> to <input type="date" id="endDate">
-            <button id="applyFilter">Apply</button>
-        </div>
-    </section>
+        <section id="summary" class="card">
+            <h2>Project Summary</h2>
+            <p>This project simulates advanced energy grid load insights with predictive analytics and customizable views. It demonstrates real-world applications of data visualization technologies and interactivity.</p>
+        </section>
+    </main>
 
-    <section id="summary" class="card">
-        <h2>Project Summary</h2>
-        <p>This project simulates advanced energy grid load insights with predictive analytics and customizable views. It demonstrates real-world application of data visualization technologies and interactivity.</p>
-    </section>
-</main>
+    <footer>
+        <p>Created by Sunshine Remollo | GitHub | 2024</p>
+    </footer>
 
-<footer>
-    <p>Created by Sunshine Remollo | GitHub | 2024</p>
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
