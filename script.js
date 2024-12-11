@@ -1,119 +1,119 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Help Section Modal
+    // Get elements
     const helpBtn = document.getElementById('helpBtn');
     const helpModal = document.getElementById('helpModal');
     const closeBtn = document.getElementById('closeBtn');
+    const applyFilterBtn = document.getElementById('applyFilter');
+    const countrySelect = document.getElementById('countrySelect');
+    const gridLoadChartElement = document.getElementById('gridLoadChart');
+    const forecastChartElement = document.getElementById('forecastChart');
+    const clockElement = document.getElementById('clock');
 
+    let gridLoadChart, forecastChart;
+
+    // Open Help Modal
     helpBtn.addEventListener('click', function () {
         helpModal.style.display = 'block';
     });
 
+    // Close Help Modal
     closeBtn.addEventListener('click', function () {
         helpModal.style.display = 'none';
     });
 
-    // Click outside modal to close it
-    window.addEventListener('click', function (e) {
-        if (e.target === helpModal) {
+    // Close Help Modal if clicked outside modal
+    window.addEventListener('click', function (event) {
+        if (event.target === helpModal) {
             helpModal.style.display = 'none';
         }
     });
 
-    // Country Selector
-    const countrySelect = document.getElementById('countrySelect');
+    // Country Selector Logic
     countrySelect.addEventListener('change', function () {
-        const selectedCountry = countrySelect.value;
-        updateChartsForCountry(selectedCountry);
+        const country = countrySelect.value;
+        console.log(`Selected Country: ${country}`);
+        updateChartsForCountry(country);  // Update the charts based on the selected country
     });
 
-    // Function to generate country-specific grid load data
-    const generateCountryData = (country) => {
-        const data = [];
-        for (let i = 0; i < 7; i++) {  // Example: 7 days of data
-            if (country === "USA") {
-                data.push(Math.floor(Math.random() * (700 - 500 + 1)) + 500);  // USA: High grid load
-            } else if (country === "Germany") {
-                data.push(Math.floor(Math.random() * (500 - 300 + 1)) + 300);  // Germany: Medium grid load
-            } else if (country === "India") {
-                data.push(Math.floor(Math.random() * (900 - 600 + 1)) + 600);  // India: Higher energy usage
-            } else if (country === "Japan") {
-                data.push(Math.floor(Math.random() * (600 - 400 + 1)) + 400);  // Japan: Moderate grid load
-            } else if (country === "Australia") {
-                data.push(Math.floor(Math.random() * (600 - 350 + 1)) + 350);  // Australia: Balanced grid load
-            }
-        }
-        return data;
-    };
+    // Clock Update
+    setInterval(function () {
+        const now = new Date();
+        clockElement.textContent = now.toLocaleTimeString();
+    }, 1000);
 
     // Update the charts based on country selection
-    const updateChartsForCountry = (country) => {
-        const gridLoadData = generateCountryData(country);
-        const forecastData = generateCountryData(country);
+    function updateChartsForCountry(country) {
+        // Placeholder for country-specific data
+        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+        const gridData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 500));
+        const forecastData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 500));
 
-        const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"];
+        // Destroy previous charts if they exist
+        if (gridLoadChart) {
+            gridLoadChart.destroy();
+        }
 
-        // Update Grid Load Chart
-        const gridLoadChart = new Chart(document.getElementById('gridLoadChart'), {
+        if (forecastChart) {
+            forecastChart.destroy();
+        }
+
+        // Create new Grid Load Chart
+        gridLoadChart = new Chart(gridLoadChartElement, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'Actual Grid Load (MW)',
-                    data: gridLoadData,
-                    borderColor: '#1abc9c',
-                    backgroundColor: 'rgba(26, 188, 156, 0.3)',
-                    fill: true,
-                    tension: 0.1
+                    data: gridData,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                    tension: 0.1,
+                    borderWidth: 2,
                 }]
             },
             options: {
                 responsive: true,
+                animation: {
+                    duration: 1000
+                },
                 plugins: {
                     title: {
                         display: true,
-                        text: `Actual Grid Load for ${country}`
+                        text: 'Actual Grid Load Over Time'
                     }
                 }
             }
         });
 
-        // Update Forecasted Load Chart
-        const forecastChart = new Chart(document.getElementById('forecastChart'), {
+        // Create new Forecasted Grid Load Chart
+        forecastChart = new Chart(forecastChartElement, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'Forecasted Grid Load (MW)',
                     data: forecastData,
-                    borderColor: '#e74c3c',
-                    backgroundColor: 'rgba(231, 76, 60, 0.3)',
-                    fill: true,
-                    tension: 0.1
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    fill: false,
+                    tension: 0.1,
+                    borderWidth: 2,
                 }]
             },
             options: {
                 responsive: true,
+                animation: {
+                    duration: 1000
+                },
                 plugins: {
                     title: {
                         display: true,
-                        text: `Forecasted Grid Load for ${country}`
+                        text: 'Forecasted Grid Load Over Time'
                     }
                 }
             }
         });
-    };
+    }
 
-    // Initialize the page
-    const initializePage = () => {
-        const today = new Date();
-        const oneWeekAgo = new Date(today);
-        oneWeekAgo.setDate(today.getDate() - 7);
-
-        document.getElementById('startDate').value = oneWeekAgo.toISOString().split('T')[0];
-        document.getElementById('endDate').value = today.toISOString().split('T')[0];
-
-        updateChartsForCountry('USA');
-    };
-
-    initializePage();
+    // Initial charts
+    updateChartsForCountry('USA');  // Set default country on load
 });
