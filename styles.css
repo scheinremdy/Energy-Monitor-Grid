@@ -23,16 +23,19 @@ header {
 
 h1 {
     font-size: 2.5em;
+    margin-bottom: 10px;
 }
 
 h2 {
     font-size: 1.8em;
     margin-top: 20px;
+    text-align: center;
 }
 
 #clock, #currentLoad {
     font-size: 1.2em;
     margin-top: 10px;
+    text-align: center;
 }
 
 button {
@@ -52,6 +55,9 @@ button:hover {
 
 #applyFilter {
     margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #summary {
@@ -60,10 +66,12 @@ button:hover {
     margin-top: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 #filters {
     margin-top: 20px;
+    text-align: center;
 }
 
 /* Modal (Help Section) */
@@ -86,7 +94,7 @@ button:hover {
     border-radius: 10px;
     width: 80%;
     max-width: 600px;
-    text-align: center;
+    text-align: left;
 }
 
 .close-btn {
@@ -128,6 +136,7 @@ footer {
 /* Chart Section */
 #chart-section, #forecast-section {
     margin-top: 20px;
+    text-align: center;
 }
 
 canvas {
