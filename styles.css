@@ -69,14 +69,23 @@ button:hover {
     text-align: center;
 }
 
-#filters {
+#filters, #countrySelector {
     margin-top: 20px;
     text-align: center;
 }
 
+/* Country Selector */
+#countrySelector select {
+    padding: 10px;
+    font-size: 1.2em;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
 /* Modal (Help Section) */
 .modal {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
