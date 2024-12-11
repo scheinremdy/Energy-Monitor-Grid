@@ -19,58 +19,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Function to generate realistic grid load data
-    const generateRealisticGridData = (length) => {
+    // Country Selector
+    const countrySelect = document.getElementById('countrySelect');
+    countrySelect.addEventListener('change', function () {
+        const selectedCountry = countrySelect.value;
+        updateChartsForCountry(selectedCountry);
+    });
+
+    // Function to generate country-specific grid load data
+    const generateCountryData = (country) => {
         const data = [];
-        for (let i = 0; i < length; i++) {
-            const hour = new Date().getHours();
-            const baseLoad = 300;
-            const dailyVariation = Math.sin((hour / 24) * Math.PI * 2) * 100;
-            const load = baseLoad + dailyVariation + Math.random() * 50;
-            data.push(Math.floor(load));
+        for (let i = 0; i < 7; i++) {  // Example: 7 days of data
+            if (country === "USA") {
+                data.push(Math.floor(Math.random() * (700 - 500 + 1)) + 500);  // USA: High grid load
+            } else if (country === "Germany") {
+                data.push(Math.floor(Math.random() * (500 - 300 + 1)) + 300);  // Germany: Medium grid load
+            } else if (country === "India") {
+                data.push(Math.floor(Math.random() * (900 - 600 + 1)) + 600);  // India: Higher energy usage
+            } else if (country === "Japan") {
+                data.push(Math.floor(Math.random() * (600 - 400 + 1)) + 400);  // Japan: Moderate grid load
+            } else if (country === "Australia") {
+                data.push(Math.floor(Math.random() * (600 - 350 + 1)) + 350);  // Australia: Balanced grid load
+            }
         }
         return data;
     };
 
-    // Function to generate forecasted grid load data
-    const generateForecastData = (length) => {
-        const data = [];
-        for (let i = 0; i < length; i++) {
-            const load = Math.floor(Math.random() * (500 - 250 + 1)) + 250;
-            data.push(load);
-        }
-        return data;
-    };
+    // Update the charts based on country selection
+    const updateChartsForCountry = (country) => {
+        const gridLoadData = generateCountryData(country);
+        const forecastData = generateCountryData(country);
 
-    // Format date for chart labels
-    const formatDate = (date) => {
-        return new Date(date).toLocaleDateString();
-    };
-
-    // Update the clock
-    const updateClock = () => {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    };
-
-    // Update charts based on the selected date range
-    const updateCharts = (startDate, endDate) => {
-        const labels = [];
-        const gridLoadData = [];
-        const forecastData = [];
-        
-        const numDays = Math.floor((endDate - startDate) / (1000 * 3600 * 24)) + 1;
-
-        // Generate data and labels
-        for (let i = 0; i < numDays; i++) {
-            const currentDate = new Date(startDate.getTime() + i * (1000 * 3600 * 24));
-            labels.push(formatDate(currentDate));
-            gridLoadData.push(generateRealisticGridData(1)[0]);
-            forecastData.push(generateForecastData(1)[0]);
-        }
+        const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"];
 
         // Update Grid Load Chart
         const gridLoadChart = new Chart(document.getElementById('gridLoadChart'), {
@@ -91,19 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Actual Grid Load Over Time'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                return `Load: ${context.raw} MW`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
+                        text: `Actual Grid Load for ${country}`
                     }
                 }
             }
@@ -128,44 +96,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Forecasted Grid Load Over Time'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                return `Forecast: ${context.raw} MW`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
+                        text: `Forecasted Grid Load for ${country}`
                     }
                 }
             }
         });
     };
 
-    // Apply the date filter
-    document.getElementById('applyFilter').addEventListener('click', () => {
-        const startDateInput = document.getElementById('startDate').value;
-        const endDateInput = document.getElementById('endDate').value;
-
-        if (startDateInput && endDateInput) {
-            const startDate = new Date(startDateInput);
-            const endDate = new Date(endDateInput);
-            if (startDate <= endDate) {
-                updateCharts(startDate, endDate);
-            } else {
-                alert("Please ensure the start date is before the end date.");
-            }
-        } else {
-            alert("Please select both start and end dates.");
-        }
-    });
-
-    // Initialize page
+    // Initialize the page
     const initializePage = () => {
         const today = new Date();
         const oneWeekAgo = new Date(today);
@@ -174,9 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('startDate').value = oneWeekAgo.toISOString().split('T')[0];
         document.getElementById('endDate').value = today.toISOString().split('T')[0];
 
-        updateCharts(oneWeekAgo, today);
-        updateClock();
-        setInterval(updateClock, 1000);
+        updateChartsForCountry('USA');
     };
 
     initializePage();
