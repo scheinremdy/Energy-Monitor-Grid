@@ -9,6 +9,8 @@ const toggleLangButton = document.getElementById('toggle-lang');
 const appTitle = document.getElementById('app-title');
 const introText = document.getElementById('intro-text');
 const footerText = document.getElementById('footer-text');
+const recommendationsButton = document.getElementById('recommendations-button');
+const recommendationsSection = document.getElementById('recommendations-section');
 
 // Function to fetch recipes based on user input
 async function searchRecipes() {
@@ -47,32 +49,30 @@ async function showRecipeDetails(recipeId) {
   document.getElementById('recipe-time').innerText = `Cooking Time: ${recipeDetails.readyInMinutes} minutes`;
   document.getElementById('recipe-ingredients').innerHTML = recipeDetails.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('');
   document.getElementById('recipe-instructions').innerText = recipeDetails.instructions;
-  
+
   recipeModal.style.display = 'flex';
 }
 
-// Close the modal
-closeModalBtn.onclick = () => recipeModal.style.display = 'none';
-window.onclick = event => {
-  if (event.target === recipeModal) {
-    recipeModal.style.display = 'none';
-  }
-}
+// Function to close the modal
+closeModalBtn.onclick = () => {
+  recipeModal.style.display = 'none';
+};
 
-// Language toggle functionality
+// Function to toggle language between English and German
 function toggleLanguage() {
-  if (appTitle.innerHTML === 'Recipe Finder & Meal Planner') {
-    appTitle.innerHTML = 'Rezeptfinder & Essensplaner';
-    introText.innerHTML = 'Willkommen beim Rezeptfinder & Essensplaner. Diese App hilft Ihnen, Rezepte basierend auf den Zutaten zu finden, die Sie zu Hause haben.';
-    footerText.innerHTML = 'Erstellt mit 💻 von Sunshine Remollo';
-    toggleLangButton.innerHTML = 'Switch to English';
+  const currentLang = toggleLangButton.innerText;
+  if (currentLang === 'Switch to Deutsch') {
+    toggleLangButton.innerText = 'Switch to English';
+    appTitle.innerText = 'Rezept Finder & Mahlzeiten Planer';
+    introText.innerText = 'Finden Sie Ihre Lieblingsgerichte hier! Geben Sie Zutaten ein, die Sie zu Hause haben, und wir helfen Ihnen, köstliche Rezepte zu entdecken.';
+    footerText.innerText = 'Erstellt mit 💻 von Sunshine Remollo';
   } else {
-    appTitle.innerHTML = 'Recipe Finder & Meal Planner';
-    introText.innerHTML = 'Find your favorite meals here! Enter ingredients you have at home, and we\'ll help you discover delicious recipes.';
-    footerText.innerHTML = 'Created with 💻 by Sunshine Remollo';
-    toggleLangButton.innerHTML = 'Switch to Deutsch';
+    toggleLangButton.innerText = 'Switch to Deutsch';
+    appTitle.innerText = 'Recipe Finder & Meal Planner';
+    introText.innerText = 'Find your favorite meals here! Enter ingredients you have at home, and we\'ll help you discover delicious recipes.';
+    footerText.innerText = 'Created with 💻 by Sunshine Remollo';
   }
 }
 
-// Event listener for the search button
+// Event listener for search button
 searchButton.onclick = searchRecipes;
