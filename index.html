@@ -15,20 +15,21 @@
   </header>
 
   <main>
-    <button id="toggleInfo">ℹ️ Toggle Info</button>
-    <section id="info">
-      <h2>Info</h2>
-      <p>Select a country to view real-time carbon intensity data for its electricity grid. This tool uses API data to provide accurate, live insights.</p>
+    <button id="toggleInfo">ℹ️ Show/Hide Info</button>
+    <section id="info" class="hidden">
+      <h2>What is this tool?</h2>
+      <p>This tool helps monitor real-time electricity grid load and carbon intensity in different countries.</p>
+      <p>Select a country from the dropdown menu to see its current carbon intensity.</p>
     </section>
 
     <section id="chart-container">
-      <h2>Real-Time Chart</h2>
+      <h2>Carbon Intensity Chart</h2>
       <canvas id="carbonChart"></canvas>
     </section>
 
     <section id="controls">
-      <h2>Options</h2>
-      <label for="countrySelector">Select Country:</label>
+      <h2>Select a Country</h2>
+      <label for="countrySelector">Choose Country:</label>
       <select id="countrySelector">
         <option value="DE">Germany</option>
         <option value="PH">Philippines</option>
@@ -37,10 +38,15 @@
       </select>
     </section>
 
-    <button id="toggleHelp">❓ Toggle Help</button>
-    <section id="help">
-      <h2>Help</h2>
-      <p>If you encounter issues, ensure your internet connection is active and the correct API key is in use.</p>
+    <button id="toggleHelp">❓ Show/Hide Help</button>
+    <section id="help" class="hidden">
+      <h2>Help Section</h2>
+      <p>If the graph does not update, please check:</p>
+      <ul>
+        <li>Your internet connection</li>
+        <li>Whether the API key is valid</li>
+        <li>Try refreshing the page</li>
+      </ul>
     </section>
   </main>
 
