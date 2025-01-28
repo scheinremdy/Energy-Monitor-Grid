@@ -2,18 +2,27 @@ const apiKey = '9549d8982c8243d9a107adfd786a43c9'; // Your Spoonacular API key
 const searchButton = document.getElementById('search-button');
 const ingredientInput = document.getElementById('ingredient-input');
 const recipeList = document.getElementById('recipe-list');
+const loadingSpinner = document.getElementById('loading');
 const favoritesList = document.getElementById('favorites-list');
 
 // Function to fetch recipes from the Spoonacular API
 async function fetchRecipes(ingredients) {
-    const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=5&apiKey=${apiKey}`;
+    loadingSpinner.style.display = 'block';  // Show loading spinner
+    const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=6&apiKey=${apiKey}`;
     
     try {
         const response = await fetch(url);
         const data = await response.json();
-        displayRecipes(data);
+        loadingSpinner.style.display = 'none';  // Hide loading spinner
+        if (data.length > 0) {
+            displayRecipes(data);
+        } else {
+            alert("No recipes found!");
+        }
     } catch (error) {
         console.error("Error fetching recipes:", error);
+        loadingSpinner.style.display = 'none';
+        alert("An error occurred. Please try again later.");
     }
 }
 
@@ -26,7 +35,6 @@ function displayRecipes(recipes) {
         recipeCard.innerHTML = `
             <img src="${recipe.image}" alt="${recipe.title}" />
             <h3>${recipe.title}</h3>
-            <p>Used Ingredients: ${recipe.usedIngredientCount}</p>
             <button class="favorite-btn" onclick="addToFavorites('${recipe.id}', '${recipe.title}', '${recipe.image}')">Add to Favorites</button>
         `;
         recipeList.appendChild(recipeCard);
@@ -47,16 +55,25 @@ function addToFavorites(id, title, image) {
     displayFavorites();
 }
 
+// Function to remove a recipe from the favorites list
+function removeFromFavorites(id) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favorites = favorites.filter(recipe => recipe.id !== id);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    displayFavorites();
+}
+
 // Function to display the favorites list
 function displayFavorites() {
     favoritesList.innerHTML = '';
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     favorites.forEach(favorite => {
         const favoriteCard = document.createElement('div');
-        favoriteCard.classList.add('recipe-card');
+        favoriteCard.classList.add('favorites-card');
         favoriteCard.innerHTML = `
             <img src="${favorite.image}" alt="${favorite.title}" />
             <h3>${favorite.title}</h3>
+            <button onclick="removeFromFavorites('${favorite.id}')">Remove from Favorites</button>
         `;
         favoritesList.appendChild(favoriteCard);
     });
