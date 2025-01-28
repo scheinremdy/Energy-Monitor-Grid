@@ -1,104 +1,177 @@
-const apiKey = "9549d8982c8243d9a107adfd786a43c9";  // Your API key
-let language = "en"; // Default language
+const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+const apiBaseUrl = "https://api.spoonacular.com/recipes";
 
-const recipesContainer = document.getElementById("recipes-container");
-const searchInput = document.getElementById("search-input");
-const recipeModal = document.getElementById("recipe-modal");
-const toggleLangButton = document.getElementById("toggle-lang");
+// Select elements
+const searchInput = document.querySelector("#search-input");
+const searchButton = document.querySelector("#search-btn");
+const recipesContainer = document.querySelector("#recipes-container");
+const recipeModal = document.querySelector("#recipe-modal");
+const closeModalButton = document.querySelector("#close-modal-btn");
+const modalContent = document.querySelector("#modal-content");
+const filtersForm = document.querySelector("#filters-form");
+const shoppingListContainer = document.querySelector("#shopping-list-container");
+const shoppingListDownload = document.querySelector("#shopping-list-download");
+const langToggleButton = document.querySelector("#lang-toggle-btn");
+const langLabel = document.querySelector("#lang-label");
+const recommendationsSection = document.querySelector("#recommendations-section");
 
-let recipesData = [];  // To store fetched recipes
+// Current state
+let currentLanguage = "en"; // Default language
+let shoppingList = [];
 
-// Fetch Recipes from API
-async function fetchRecipes(query = '') {
-    const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${query}&number=10`;
-
+// Fetch recipes from the API
+async function fetchRecipes(query, filters = {}) {
     try {
-        const response = await fetch(apiUrl);
+        const filterParams = Object.entries(filters)
+            .map(([key, value]) => `${key}=${value}`)
+            .join("&");
+
+        const response = await fetch(
+            `${apiBaseUrl}/complexSearch?query=${query}&apiKey=${apiKey}&${filterParams}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch recipes. Please try again later.");
+        }
+
         const data = await response.json();
-        recipesData = data.results;
-        displayRecipes(recipesData);
+        return data.results || [];
     } catch (error) {
-        console.error('Error fetching recipes:', error);
+        alert(error.message);
+        return [];
     }
 }
 
-// Display Recipe Cards
-function displayRecipes(recipes) {
-    recipesContainer.innerHTML = '';
-    recipes.forEach(recipe => {
+// Render recipe cards
+function renderRecipes(recipes) {
+    recipesContainer.innerHTML = ""; // Clear previous results
+    if (recipes.length === 0) {
+        recipesContainer.innerHTML = `<p>No recipes found. Try a different search!</p>`;
+        return;
+    }
+
+    recipes.forEach((recipe) => {
         const card = document.createElement("div");
-        card.classList.add("recipe-card");
+        card.className = "recipe-card";
+
         card.innerHTML = `
-            <img src="https://spoonacular.com/recipeImages/${recipe.id}-480x360.jpg" alt="${recipe.title}">
-            <div class="recipe-card-content">
-                <h3 class="recipe-title">${recipe.title}</h3>
-            </div>
+            <img src="${recipe.image}" alt="${recipe.title}">
+            <h3>${recipe.title}</h3>
+            <button class="details-btn" data-id="${recipe.id}">${currentLanguage === "en" ? "View Recipe" : "Rezept ansehen"}</button>
         `;
-        card.onclick = () => showRecipeDetails(recipe.id);
+
         recipesContainer.appendChild(card);
     });
 }
 
-// Show Recipe Details in Modal
+// Show recipe details in a modal
 async function showRecipeDetails(recipeId) {
-    const apiUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
-    
     try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        document.getElementById("recipe-title").textContent = data.title;
-        document.getElementById("recipe-image").src = data.image;
-        document.getElementById("recipe-details").innerHTML = `
-            <p><strong>Time:</strong> ${data.readyInMinutes} minutes</p>
-            <p><strong>Servings:</strong> ${data.servings}</p>
+        const response = await fetch(`${apiBaseUrl}/${recipeId}/information?apiKey=${apiKey}`);
+        const recipe = await response.json();
+
+        modalContent.innerHTML = `
+            <h2>${recipe.title}</h2>
+            <img src="${recipe.image}" alt="${recipe.title}">
+            <p>${currentLanguage === "en" ? "Cooking Time" : "Kochzeit"}: ${recipe.readyInMinutes} mins</p>
+            <h3>${currentLanguage === "en" ? "Ingredients" : "Zutaten"}:</h3>
+            <ul>
+                ${recipe.extendedIngredients
+                    .map((ingredient) => `<li>${ingredient.original}</li>`)
+                    .join("")}
+            </ul>
+            <h3>${currentLanguage === "en" ? "Instructions" : "Anweisungen"}:</h3>
+            <p>${recipe.instructions || "No instructions provided."}</p>
+            <button id="add-to-shopping-list">${currentLanguage === "en" ? "Add to Shopping List" : "Zur Einkaufsliste hinzufügen"}</button>
         `;
-        document.getElementById("recipe-ingredients").innerHTML = `
-            <h3>Ingredients</h3>
-            <ul>${data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('')}</ul>
-        `;
-        document.getElementById("recipe-instructions").innerHTML = `
-            <h3>Instructions</h3>
-            <p>${data.instructions}</p>
-        `;
+
         recipeModal.style.display = "block";
+
+        // Add ingredients to shopping list
+        document.querySelector("#add-to-shopping-list").addEventListener("click", () => {
+            shoppingList = recipe.extendedIngredients.map((ingredient) => ingredient.original);
+            renderShoppingList();
+        });
     } catch (error) {
-        console.error('Error fetching recipe details:', error);
+        alert("Failed to fetch recipe details. Please try again.");
     }
 }
 
-// Close Modal
-function closeModal() {
-    recipeModal.style.display = "none";
+// Render shopping list
+function renderShoppingList() {
+    shoppingListContainer.innerHTML = shoppingList
+        .map((item) => `<li>${item}</li>`)
+        .join("");
+
+    shoppingListDownload.style.display = "block"; // Show download button
 }
 
-// Toggle Language
+// Download shopping list
+function downloadShoppingList() {
+    const blob = new Blob([shoppingList.join("\n")], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "shopping-list.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Toggle language
 function toggleLanguage() {
-    if (language === "en") {
-        language = "de";
-        toggleLangButton.textContent = "Switch to English";
-        // Here you would fetch German recipes or content.
-    } else {
-        language = "en";
-        toggleLangButton.textContent = "Switch to Deutsch";
+    currentLanguage = currentLanguage === "en" ? "de" : "en";
+    langLabel.textContent = currentLanguage === "en" ? "English" : "Deutsch";
+    updateUIForLanguage();
+}
+
+// Update UI text for the selected language
+function updateUIForLanguage() {
+    searchInput.placeholder = currentLanguage === "en" ? "Search recipes..." : "Rezepte suchen...";
+    searchButton.textContent = currentLanguage === "en" ? "Search" : "Suchen";
+    renderRecommendations();
+}
+
+// Render recommendations
+function renderRecommendations() {
+    const recommendations = [
+        { id: 1, title: "Vegan Lasagna", image: "example1.jpg" },
+        { id: 2, title: "Gluten-Free Pancakes", image: "example2.jpg" },
+        { id: 3, title: "Mediterranean Salad", image: "example3.jpg" },
+    ];
+
+    recommendationsSection.innerHTML = recommendations
+        .map(
+            (rec) => `
+        <div class="recommendation-card">
+            <img src="${rec.image}" alt="${rec.title}">
+            <h4>${rec.title}</h4>
+        </div>
+    `
+        )
+        .join("");
+}
+
+// Event Listeners
+searchButton.addEventListener("click", async () => {
+    const query = searchInput.value;
+    const filters = Object.fromEntries(new FormData(filtersForm).entries());
+    const recipes = await fetchRecipes(query, filters);
+    renderRecipes(recipes);
+});
+
+recipesContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("details-btn")) {
+        const recipeId = e.target.dataset.id;
+        showRecipeDetails(recipeId);
     }
-}
+});
 
-// Dark Mode Toggle
-document.body.classList.add("light-mode");
+closeModalButton.addEventListener("click", () => {
+    recipeModal.style.display = "none";
+});
 
-function toggleTheme() {
-    if (document.body.classList.contains("light-mode")) {
-        document.body.classList.remove("light-mode");
-        document.body.classList.add("dark-mode");
-    } else {
-        document.body.classList.remove("dark-mode");
-        document.body.classList.add("light-mode");
-    }
-}
+langToggleButton.addEventListener("click", toggleLanguage);
+shoppingListDownload.addEventListener("click", downloadShoppingList);
 
-// Initialize
-window.onload = () => {
-    fetchRecipes();
-    toggleLangButton.addEventListener('click', toggleLanguage);
-    document.getElementById("toggle-theme").addEventListener('click', toggleTheme);
-}
+// Initial Load
+renderRecommendations();
