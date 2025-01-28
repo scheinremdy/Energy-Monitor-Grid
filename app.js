@@ -5,10 +5,6 @@ const recipeModal = document.getElementById('recipe-modal');
 const closeModalBtn = document.querySelector('.close-btn');
 const mealTypeSelect = document.getElementById('meal-type');
 const ingredientsInput = document.getElementById('ingredients');
-const toggleLangButton = document.getElementById('toggle-lang');
-const appTitle = document.getElementById('app-title');
-const introText = document.getElementById('intro-text');
-const footerText = document.getElementById('footer-text');
 const recommendationsButton = document.getElementById('recommendations-button');
 const recommendationsSection = document.getElementById('recommendations-section');
 
@@ -16,38 +12,39 @@ const recommendationsSection = document.getElementById('recommendations-section'
 async function searchRecipes() {
   const ingredients = ingredientsInput.value;
   const mealType = mealTypeSelect.value;
-  const url = `https://api.spoonacular.com/recipes/complexSearch?type=${mealType}&ingredients=${ingredients}&apiKey=${apiKey}`;
 
-  const response = await fetch(url);
+  if (!ingredients) {
+    alert("Please enter some ingredients!");
+    return;
+  }
+
+  const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&type=${mealType}&apiKey=${apiKey}`);
   const data = await response.json();
-  displayRecipes(data.results);
-}
 
-// Function to display recipes
-function displayRecipes(recipes) {
-  recipeCards.innerHTML = ''; // Clear previous results
-  recipes.forEach(recipe => {
-    const card = document.createElement('div');
-    card.classList.add('recipe-card');
-    card.innerHTML = `
-      <img src="${recipe.image}" alt="${recipe.title}">
+  if (data.length === 0) {
+    recipeCards.innerHTML = '<p>No recipes found. Try different ingredients.</p>';
+    return;
+  }
+
+  recipeCards.innerHTML = data.map(recipe => `
+    <div class="recipe-card" onclick="showRecipeDetails(${recipe.id})">
+      <img src="${recipe.image}" alt="${recipe.title}" />
       <h3>${recipe.title}</h3>
-    `;
-    card.onclick = () => showRecipeDetails(recipe.id);
-    recipeCards.appendChild(card);
-  });
+    </div>
+  `).join('');
 }
 
-// Function to show recipe details in the modal
+// Function to show detailed recipe information in the modal
 async function showRecipeDetails(recipeId) {
-  const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
-  const response = await fetch(url);
+  const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`);
   const recipeDetails = await response.json();
-  
+
   document.getElementById('recipe-title').innerText = recipeDetails.title;
   document.getElementById('recipe-image').src = recipeDetails.image;
-  document.getElementById('recipe-time').innerText = `Cooking Time: ${recipeDetails.readyInMinutes} minutes`;
-  document.getElementById('recipe-ingredients').innerHTML = recipeDetails.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('');
+  document.getElementById('recipe-time').innerText = `Time: ${recipeDetails.readyInMinutes} minutes`;
+  document.getElementById('recipe-ingredients').innerHTML = recipeDetails.extendedIngredients.map(ingredient => `
+    <li>${ingredient.original}</li>
+  `).join('');
   document.getElementById('recipe-instructions').innerText = recipeDetails.instructions;
 
   recipeModal.style.display = 'flex';
