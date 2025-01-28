@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electric Grid Load Projector</title>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Custom JS -->
-    <script defer src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
@@ -17,46 +13,34 @@
     </header>
     <div class="container">
         <div class="info">
-            <h2>What is this Project About?</h2>
-            <p>The Electric Grid Load Projector is a tool designed to visualize energy consumption trends and forecast future demand. 
-            By analyzing this data, communities can better manage their electricity distribution and prepare for peak hours. 
-            It provides a clear view of the current load and projected usage for different countries: Germany, USA, and the Philippines.</p>
+            <button id="infoBtn">Info</button>
+            <button id="helpBtn">Help</button>
+            <p id="infoText" class="hidden">
+                The Electric Grid Load Projector visualizes real-time electricity grid data from different countries, helping with efficient energy management.
+            </p>
+            <p id="helpText" class="hidden">
+                Use the dropdown menu to select a country and view the current energy consumption. The charts show power distribution and grid usage.
+            </p>
         </div>
 
-        <div class="controls">
-            <label for="countrySelect">Select Country:</label>
-            <select id="countrySelect">
+        <div class="selector">
+            <label for="country">Select Country:</label>
+            <select id="country">
                 <option value="Germany">Germany</option>
-                <option value="USA">USA</option>
                 <option value="Philippines">Philippines</option>
+                <option value="USA">USA</option>
+                <option value="India">India</option>
+                <option value="Canada">Canada</option>
             </select>
         </div>
 
         <div class="charts">
-            <div class="chart-container">
-                <h3>Current Grid Load</h3>
-                <canvas id="gridLoadChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <h3>Forecasted Load</h3>
-                <canvas id="forecastChart"></canvas>
-            </div>
-        </div>
-
-        <div class="buttons">
-            <button id="infoBtn">Info</button>
-            <button id="helpBtn">Help</button>
-        </div>
-
-        <div class="help-section" id="helpSection">
-            <h2>Help Section</h2>
-            <p>Use the dropdown menu to select a country and view its energy load data. The "Current Grid Load" chart shows the current electricity usage, 
-            while the "Forecasted Load" chart predicts future energy demands. If you need assistance or want to understand the data better, click the "Info" button.</p>
+            <canvas id="gridLoadChart"></canvas>
         </div>
     </div>
-
     <footer>
         &copy; 2025 Electric Grid Load Projector. All Rights Reserved.
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>
