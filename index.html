@@ -18,15 +18,19 @@
     </header>
 
     <!-- Search Section -->
-    <section>
-      <label for="meal-type">Choose Meal Type: </label>
-      <select id="meal-type">
-        <option value="breakfast">Breakfast</option>
-        <option value="lunch">Lunch</option>
-        <option value="dinner">Dinner</option>
-      </select>
-      <input type="text" id="ingredients" placeholder="Enter ingredients (e.g., chicken, tomato)" />
-      <button id="search-button">Search</button>
+    <section class="search-section">
+      <div class="input-group">
+        <label for="meal-type">Choose Meal Type: </label>
+        <select id="meal-type">
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <input type="text" id="ingredients" placeholder="Enter ingredients (e.g., chicken, tomato)" />
+      </div>
+      <button id="search-button" class="button">Search</button>
     </section>
 
     <!-- Recipe Cards -->
@@ -37,14 +41,14 @@
       <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h2 id="recipe-title"></h2>
-        <img id="recipe-image" />
+        <img id="recipe-image" class="recipe-image" />
         <p id="recipe-time"></p>
         <h3>Ingredients:</h3>
         <ul id="recipe-ingredients"></ul>
         <h3>Instructions:</h3>
         <p id="recipe-instructions"></p>
-        <button id="recommendations-button">See Recommendations</button>
-        <div id="recommendations-section"></div>
+        <button id="recommendations-button" class="button">See Recommendations</button>
+        <div id="recommendations-section" class="recommendations-section"></div>
       </div>
     </div>
 
