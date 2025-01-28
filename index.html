@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Electric Grid Load Projector</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script defer src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Grid Load Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Electric Grid Load Projector</h1>
-    <p>Monitor real-time carbon intensity by country</p>
-  </header>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="en-btn" onclick="changeLanguage('en')">English</button>
+        <button id="de-btn" onclick="changeLanguage('de')">Deutsch</button>
+    </div>
 
-  <main>
-    <section id="controls">
-      <h2>Select a Country</h2>
-      <label for="countrySelector">Choose Country:</label>
-      <select id="countrySelector">
-        <option value="DE">Germany</option>
-        <option value="PH">Philippines</option>
-        <option value="FR">France</option>
-        <option value="US">United States</option>
-      </select>
+    <!-- Header -->
+    <header>
+        <h1 id="title">Electric Grid Load Dashboard</h1>
+    </header>
+
+    <!-- Real-Time Data Display Section -->
+    <section id="data-section">
+        <div class="data-container">
+            <h2 id="grid-load-heading">Current Grid Load</h2>
+            <p id="grid-load">Loading...</p>
+            <h3 id="carbon-intensity-heading">Carbon Intensity</h3>
+            <p id="carbon-intensity">Loading...</p>
+        </div>
     </section>
 
-    <section id="chart-container">
-      <h2>Carbon Intensity Over Time</h2>
-      <canvas id="carbonChart"></canvas>
+    <!-- Chart Section -->
+    <section id="chart-section">
+        <h2>Grid Load Over Time</h2>
+        <div id="chart-container"></div>
     </section>
 
-    <section id="info">
-      <h2>Live Data Info</h2>
-      <p>Click the country dropdown above to load real-time carbon intensity data for the selected country.</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>Powered by Electricity Map API</p>
-  </footer>
+    <script src="script.js"></script>
 </body>
 </html>
-
