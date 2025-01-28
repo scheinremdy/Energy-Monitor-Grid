@@ -63,44 +63,6 @@ const recipes = [
     },
     image: "https://images.unsplash.com/photo-1598799231580-d31f88cc57ff",
   },
-  {
-    id: 4,
-    title: "Savory Butter Chicken",
-    cuisine: "Indian",
-    mealType: "Dinner",
-    diet: "Gluten-free",
-    difficulty: "Intermediate",
-    ingredients: [
-      "Chicken",
-      "Tomato Puree",
-      "Heavy Cream",
-      "Butter",
-      "Spices (Cumin, Coriander, Garam Masala)",
-    ],
-    instructions:
-      "Marinate chicken pieces in yogurt and spices. Cook them until tender, then simmer in a creamy tomato-based sauce enriched with butter and heavy cream. Serve hot with basmati rice or naan.",
-    description: {
-      en: "A creamy, spiced delight with tender chicken pieces immersed in a rich, buttery tomato sauce. Perfectly paired with fragrant rice or naan bread!",
-      de: "Ein cremiges, gewürztes Gericht mit zarten Hähnchenstücken, eingetaucht in einer reichhaltigen, buttrigen Tomatensauce. Perfekt kombiniert mit duftendem Reis oder Naan-Brot!",
-    },
-    image: "https://images.unsplash.com/photo-1601646831948-c160daa2ff83",
-  },
-  {
-    id: 5,
-    title: "Chocolate Lava Cake",
-    cuisine: "Dessert",
-    mealType: "Dessert",
-    diet: "Vegetarian",
-    difficulty: "Advanced",
-    ingredients: ["Dark Chocolate", "Butter", "Sugar", "Eggs", "Flour"],
-    instructions:
-      "Melt dark chocolate and butter together. Beat eggs and sugar until fluffy, then fold in the melted chocolate and flour. Bake until the edges are set, but the center remains molten. Serve warm with vanilla ice cream.",
-    description: {
-      en: "An indulgent treat with a gooey molten center, oozing with rich chocolate. A decadent dessert for any special occasion!",
-      de: "Ein genussvolles Dessert mit einem flüssigen Kern, der von reichhaltiger Schokolade durchzogen ist. Ein dekadenter Nachtisch für jeden besonderen Anlass!",
-    },
-    image: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb",
-  },
 ];
 
 // Render Recipes
@@ -118,6 +80,31 @@ function renderRecipes(data) {
     recipesContainer.appendChild(recipeCard);
   });
 }
+
+// Open Modal with Recipe Details
+function openModal(recipe) {
+  recipeModal.style.display = "block";
+  modalContent.innerHTML = `
+    <h2>${recipe.title}</h2>
+    <img src="${recipe.image}" alt="${recipe.title}" class="modal-recipe-image" />
+    <p><strong>Description:</strong> ${recipe.description.en}</p>
+    <p><strong>Ingredients:</strong> ${recipe.ingredients.join(", ")}</p>
+    <p><strong>Instructions:</strong> ${recipe.instructions}</p>
+  `;
+}
+
+// Event Listeners
+recipesContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("view-recipe-btn")) {
+    const recipeId = parseInt(e.target.dataset.id, 10);
+    const selectedRecipe = recipes.find((r) => r.id === recipeId);
+    if (selectedRecipe) openModal(selectedRecipe);
+  }
+});
+
+closeModalBtn.addEventListener("click", () => {
+  recipeModal.style.display = "none";
+});
 
 // Initialize App
 renderRecipes(recipes);
