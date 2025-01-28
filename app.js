@@ -1,177 +1,170 @@
-const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
-const apiBaseUrl = "https://api.spoonacular.com/recipes";
+// DOM Elements
+const searchInput = document.getElementById('search-input');
+const searchBtn = document.getElementById('search-btn');
+const filters = {
+  cuisine: document.getElementById('cuisine-filter'),
+  mealType: document.getElementById('meal-type-filter'),
+  diet: document.getElementById('diet-filter'),
+  difficulty: document.getElementById('difficulty-filter'),
+};
+const recipesContainer = document.getElementById('recipes-container');
+const recommendationsContainer = document.getElementById('recommendation-cards');
+const recipeModal = document.getElementById('recipe-modal');
+const modalContent = document.getElementById('modal-content');
+const closeModalBtn = document.getElementById('close-modal-btn');
+const darkModeToggle = document.getElementById('dark-mode-toggle');
 
-// Select elements
-const searchInput = document.querySelector("#search-input");
-const searchButton = document.querySelector("#search-btn");
-const recipesContainer = document.querySelector("#recipes-container");
-const recipeModal = document.querySelector("#recipe-modal");
-const closeModalButton = document.querySelector("#close-modal-btn");
-const modalContent = document.querySelector("#modal-content");
-const filtersForm = document.querySelector("#filters-form");
-const shoppingListContainer = document.querySelector("#shopping-list-container");
-const shoppingListDownload = document.querySelector("#shopping-list-download");
-const langToggleButton = document.querySelector("#lang-toggle-btn");
-const langLabel = document.querySelector("#lang-label");
-const recommendationsSection = document.querySelector("#recommendations-section");
+// Recipe Data (Mock Data for now)
+const recipes = [
+  {
+    id: 1,
+    title: "Spaghetti Carbonara",
+    cuisine: "Italian",
+    mealType: "Dinner",
+    diet: "Vegetarian",
+    difficulty: "Easy",
+    ingredients: ["Spaghetti", "Eggs", "Parmesan Cheese", "Black Pepper"],
+    instructions: "Boil pasta. Mix eggs and cheese. Toss with hot pasta.",
+    language: { en: "Classic Italian pasta dish.", de: "Klassisches italienisches Pastagericht." }
+  },
+  {
+    id: 2,
+    title: "Vegetable Stir Fry",
+    cuisine: "Asian",
+    mealType: "Lunch",
+    diet: "Vegan",
+    difficulty: "Easy",
+    ingredients: ["Broccoli", "Carrots", "Soy Sauce", "Garlic"],
+    instructions: "Stir fry vegetables in soy sauce and garlic.",
+    language: { en: "Quick and healthy veggie stir-fry.", de: "Schnelles und gesundes Gemüsegericht." }
+  },
+  {
+    id: 3,
+    title: "Tacos",
+    cuisine: "Mexican",
+    mealType: "Dinner",
+    diet: "Gluten-free",
+    difficulty: "Intermediate",
+    ingredients: ["Taco Shells", "Ground Beef", "Cheese", "Lettuce"],
+    instructions: "Cook beef, assemble tacos with toppings.",
+    language: { en: "Mexican street food classic.", de: "Mexikanischer Straßenessen-Klassiker." }
+  },
+];
 
-// Current state
-let currentLanguage = "en"; // Default language
-let shoppingList = [];
+// Global State
+let language = "en";
 
-// Fetch recipes from the API
-async function fetchRecipes(query, filters = {}) {
-    try {
-        const filterParams = Object.entries(filters)
-            .map(([key, value]) => `${key}=${value}`)
-            .join("&");
+// Render Recipes
+function renderRecipes(data) {
+  recipesContainer.innerHTML = ""; // Clear previous recipes
+  data.forEach((recipe) => {
+    const recipeCard = document.createElement("div");
+    recipeCard.classList.add("recipe-card");
+    recipeCard.innerHTML = `
+      <h3>${recipe.title}</h3>
+      <p>${recipe.language[language]}</p>
+      <button class="view-recipe-btn" data-id="${recipe.id}">View Recipe</button>
+    `;
+    recipesContainer.appendChild(recipeCard);
+  });
 
-        const response = await fetch(
-            `${apiBaseUrl}/complexSearch?query=${query}&apiKey=${apiKey}&${filterParams}`
-        );
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch recipes. Please try again later.");
-        }
-
-        const data = await response.json();
-        return data.results || [];
-    } catch (error) {
-        alert(error.message);
-        return [];
-    }
+  // Attach event listeners to "View Recipe" buttons
+  document.querySelectorAll(".view-recipe-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => showRecipeModal(e.target.dataset.id));
+  });
 }
 
-// Render recipe cards
-function renderRecipes(recipes) {
-    recipesContainer.innerHTML = ""; // Clear previous results
-    if (recipes.length === 0) {
-        recipesContainer.innerHTML = `<p>No recipes found. Try a different search!</p>`;
-        return;
-    }
+// Show Recipe Modal
+function showRecipeModal(recipeId) {
+  const recipe = recipes.find((r) => r.id === parseInt(recipeId));
+  modalContent.innerHTML = `
+    <h2>${recipe.title}</h2>
+    <h4>Ingredients:</h4>
+    <ul>${recipe.ingredients.map((ing) => `<li>${ing}</li>`).join("")}</ul>
+    <h4>Instructions:</h4>
+    <p>${recipe.instructions}</p>
+    <button id="download-list" class="download-btn">Download Shopping List</button>
+  `;
+  recipeModal.style.display = "flex";
 
-    recipes.forEach((recipe) => {
-        const card = document.createElement("div");
-        card.className = "recipe-card";
-
-        card.innerHTML = `
-            <img src="${recipe.image}" alt="${recipe.title}">
-            <h3>${recipe.title}</h3>
-            <button class="details-btn" data-id="${recipe.id}">${currentLanguage === "en" ? "View Recipe" : "Rezept ansehen"}</button>
-        `;
-
-        recipesContainer.appendChild(card);
-    });
+  // Attach download functionality
+  document.getElementById("download-list").addEventListener("click", () => {
+    const shoppingList = recipe.ingredients.join("\n");
+    const blob = new Blob([shoppingList], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${recipe.title}-shopping-list.txt`;
+    link.click();
+  });
 }
 
-// Show recipe details in a modal
-async function showRecipeDetails(recipeId) {
-    try {
-        const response = await fetch(`${apiBaseUrl}/${recipeId}/information?apiKey=${apiKey}`);
-        const recipe = await response.json();
+// Close Modal
+closeModalBtn.addEventListener("click", () => {
+  recipeModal.style.display = "none";
+});
 
-        modalContent.innerHTML = `
-            <h2>${recipe.title}</h2>
-            <img src="${recipe.image}" alt="${recipe.title}">
-            <p>${currentLanguage === "en" ? "Cooking Time" : "Kochzeit"}: ${recipe.readyInMinutes} mins</p>
-            <h3>${currentLanguage === "en" ? "Ingredients" : "Zutaten"}:</h3>
-            <ul>
-                ${recipe.extendedIngredients
-                    .map((ingredient) => `<li>${ingredient.original}</li>`)
-                    .join("")}
-            </ul>
-            <h3>${currentLanguage === "en" ? "Instructions" : "Anweisungen"}:</h3>
-            <p>${recipe.instructions || "No instructions provided."}</p>
-            <button id="add-to-shopping-list">${currentLanguage === "en" ? "Add to Shopping List" : "Zur Einkaufsliste hinzufügen"}</button>
-        `;
+// Filter Recipes
+function filterRecipes() {
+  const cuisine = filters.cuisine.value;
+  const mealType = filters.mealType.value;
+  const diet = filters.diet.value;
+  const difficulty = filters.difficulty.value;
 
-        recipeModal.style.display = "block";
+  const filteredRecipes = recipes.filter((recipe) => {
+    return (
+      (cuisine === "" || recipe.cuisine === cuisine) &&
+      (mealType === "" || recipe.mealType === mealType) &&
+      (diet === "" || recipe.diet === diet) &&
+      (difficulty === "" || recipe.difficulty === difficulty)
+    );
+  });
 
-        // Add ingredients to shopping list
-        document.querySelector("#add-to-shopping-list").addEventListener("click", () => {
-            shoppingList = recipe.extendedIngredients.map((ingredient) => ingredient.original);
-            renderShoppingList();
-        });
-    } catch (error) {
-        alert("Failed to fetch recipe details. Please try again.");
-    }
+  renderRecipes(filteredRecipes);
 }
 
-// Render shopping list
-function renderShoppingList() {
-    shoppingListContainer.innerHTML = shoppingList
-        .map((item) => `<li>${item}</li>`)
-        .join("");
+// Attach Filter Change Event Listeners
+Object.values(filters).forEach((filter) => {
+  filter.addEventListener("change", filterRecipes);
+});
 
-    shoppingListDownload.style.display = "block"; // Show download button
-}
+// Search Recipes
+searchBtn.addEventListener("click", () => {
+  const query = searchInput.value.toLowerCase();
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(query)
+  );
+  renderRecipes(filteredRecipes);
+});
 
-// Download shopping list
-function downloadShoppingList() {
-    const blob = new Blob([shoppingList.join("\n")], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "shopping-list.txt";
-    a.click();
-    URL.revokeObjectURL(url);
-}
+// Dark Mode Toggle
+darkModeToggle.addEventListener("click", () => {
+  document.body.dataset.theme = document.body.dataset.theme === "dark" ? "" : "dark";
+});
 
-// Toggle language
-function toggleLanguage() {
-    currentLanguage = currentLanguage === "en" ? "de" : "en";
-    langLabel.textContent = currentLanguage === "en" ? "English" : "Deutsch";
-    updateUIForLanguage();
-}
-
-// Update UI text for the selected language
-function updateUIForLanguage() {
-    searchInput.placeholder = currentLanguage === "en" ? "Search recipes..." : "Rezepte suchen...";
-    searchButton.textContent = currentLanguage === "en" ? "Search" : "Suchen";
-    renderRecommendations();
-}
-
-// Render recommendations
+// Recommendations
 function renderRecommendations() {
-    const recommendations = [
-        { id: 1, title: "Vegan Lasagna", image: "example1.jpg" },
-        { id: 2, title: "Gluten-Free Pancakes", image: "example2.jpg" },
-        { id: 3, title: "Mediterranean Salad", image: "example3.jpg" },
-    ];
-
-    recommendationsSection.innerHTML = recommendations
-        .map(
-            (rec) => `
-        <div class="recommendation-card">
-            <img src="${rec.image}" alt="${rec.title}">
-            <h4>${rec.title}</h4>
-        </div>
-    `
-        )
-        .join("");
+  recommendationsContainer.innerHTML = "";
+  recipes.slice(0, 3).forEach((recipe) => {
+    const card = document.createElement("div");
+    card.classList.add("recipe-card");
+    card.innerHTML = `
+      <h3>${recipe.title}</h3>
+      <p>${recipe.language[language]}</p>
+    `;
+    recommendationsContainer.appendChild(card);
+  });
 }
 
-// Event Listeners
-searchButton.addEventListener("click", async () => {
-    const query = searchInput.value;
-    const filters = Object.fromEntries(new FormData(filtersForm).entries());
-    const recipes = await fetchRecipes(query, filters);
-    renderRecipes(recipes);
+// Language Toggle
+const languageToggle = document.createElement("button");
+languageToggle.textContent = "🇩🇪/🇬🇧";
+languageToggle.addEventListener("click", () => {
+  language = language === "en" ? "de" : "en";
+  renderRecipes(recipes);
+  renderRecommendations();
 });
+document.querySelector("header").appendChild(languageToggle);
 
-recipesContainer.addEventListener("click", (e) => {
-    if (e.target.classList.contains("details-btn")) {
-        const recipeId = e.target.dataset.id;
-        showRecipeDetails(recipeId);
-    }
-});
-
-closeModalButton.addEventListener("click", () => {
-    recipeModal.style.display = "none";
-});
-
-langToggleButton.addEventListener("click", toggleLanguage);
-shoppingListDownload.addEventListener("click", downloadShoppingList);
-
-// Initial Load
+// Initialize App
+renderRecipes(recipes);
 renderRecommendations();
