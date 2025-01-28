@@ -2,11 +2,21 @@ let language = 'en'; // Default language
 
 // Data fetching function
 async function fetchGridData() {
-    const apiKey = '0MEaY3Tw2VaeCTyRP3FFbHqVl7G6kyX7x95BArD4'; // Replace with your actual API key
-    const apiUrl = `https://api.electricitymap.org/v3/carbon-intensity?apikey=${apiKey}`;
+    const apiKey = '0MEaY3Tw2VaeCTyRP3FFbHqVl7G6kyX7x95BArD4'; // Your API key
+    const apiUrl = 'https://api.electricitymap.org/v3/carbon-intensity';
 
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+
         const data = await response.json();
         updateDataSection(data);
         updateChart(data);
@@ -20,8 +30,9 @@ function updateDataSection(data) {
     const gridLoadElement = document.getElementById('grid-load');
     const carbonIntensityElement = document.getElementById('carbon-intensity');
 
-    const gridLoad = data.data[0].load; // Example of data structure
-    const carbonIntensity = data.data[0].carbon_intensity; // Example of data structure
+    // Example: Adjust the properties based on the actual API response
+    const gridLoad = data.data[0].load; // Grid load in MW
+    const carbonIntensity = data.data[0].carbon_intensity; // Carbon intensity in gCO2/kWh
 
     gridLoadElement.textContent = `${gridLoad} MW`;
     carbonIntensityElement.textContent = `${carbonIntensity} gCO2/kWh`;
