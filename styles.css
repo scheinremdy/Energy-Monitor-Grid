@@ -1,18 +1,21 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
   width: 90%;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: 50px auto;
 }
 
 header {
   text-align: center;
-  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 header h1 {
@@ -31,26 +34,27 @@ section {
 
 #meal-type,
 #ingredients {
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
   margin-right: 10px;
 }
 
 #search-button {
-  padding: 10px 15px;
+  padding: 12px 18px;
   font-size: 1rem;
   cursor: pointer;
   background-color: #3b8e32;
   color: white;
   border: none;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 #search-button:hover {
   background-color: #2a6b24;
 }
 
-.recipe-cards {
+#recipe-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -66,6 +70,12 @@ section {
   padding: 15px;
   text-align: center;
   cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .recipe-card img {
@@ -76,11 +86,6 @@ section {
 .recipe-card h3 {
   font-size: 1.2rem;
   color: #333;
-}
-
-.recipe-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .recipe-modal {
@@ -99,8 +104,9 @@ section {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
+  text-align: center;
 }
 
 .close-btn {
@@ -109,6 +115,25 @@ section {
   right: 20px;
   font-size: 2rem;
   cursor: pointer;
+}
+
+#recommendations-section {
+  margin-top: 20px;
+}
+
+#recommendations-button {
+  padding: 12px 18px;
+  font-size: 1rem;
+  background-color: #3b8e32;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#recommendations-button:hover {
+  background-color: #2a6b24;
 }
 
 footer {
