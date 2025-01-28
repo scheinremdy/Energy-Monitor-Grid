@@ -11,22 +11,10 @@
 <body>
   <header>
     <h1>Electric Grid Load Projector</h1>
-    <p>Real-time Carbon Intensity Data</p>
+    <p>Monitor real-time carbon intensity by country</p>
   </header>
 
   <main>
-    <button id="toggleInfo" class="btn-info">ℹ️ Show/Hide Info</button>
-    <section id="info" class="hidden">
-      <h2>What is this tool?</h2>
-      <p>This tool helps monitor real-time electricity grid load and carbon intensity in different countries.</p>
-      <p>Select a country from the dropdown menu to see its current carbon intensity.</p>
-    </section>
-
-    <section id="chart-container">
-      <h2>Carbon Intensity Chart</h2>
-      <canvas id="carbonChart"></canvas>
-    </section>
-
     <section id="controls">
       <h2>Select a Country</h2>
       <label for="countrySelector">Choose Country:</label>
@@ -38,15 +26,14 @@
       </select>
     </section>
 
-    <button id="toggleHelp" class="btn-help">❓ Show/Hide Help</button>
-    <section id="help" class="hidden">
-      <h2>Help Section</h2>
-      <p>If the graph does not update, please check:</p>
-      <ul>
-        <li>Your internet connection</li>
-        <li>Whether the API key is valid</li>
-        <li>Try refreshing the page</li>
-      </ul>
+    <section id="chart-container">
+      <h2>Carbon Intensity Over Time</h2>
+      <canvas id="carbonChart"></canvas>
+    </section>
+
+    <section id="info">
+      <h2>Live Data Info</h2>
+      <p>Click the country dropdown above to load real-time carbon intensity data for the selected country.</p>
     </section>
   </main>
 
@@ -55,3 +42,4 @@
   </footer>
 </body>
 </html>
+
