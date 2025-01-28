@@ -83,7 +83,7 @@ function displayFavorites() {
     });
 }
 
-// Event listeners
+// Event listener for the search button
 searchButton.addEventListener('click', () => {
     const ingredients = ingredientInput.value.trim().replace(/\s+/g, ',');
     if (ingredients) {
@@ -102,7 +102,7 @@ function toggleLanguage() {
         toggleLangButton.innerHTML = 'Switch to English';
     } else {
         appTitle.innerHTML = 'Recipe Finder & Meal Planner';
-        introText.innerHTML = 'Welcome to the Recipe Finder & Meal Planner. This app helps you find recipes based on ingredients you have at home.';
+        introText.innerHTML = 'Find your favorite meals here! Enter ingredients you have at home, and we\'ll help you discover delicious recipes.';
         footerText.innerHTML = 'Created with 💻 by Sunshine Remollo';
         toggleLangButton.innerHTML = 'Switch to Deutsch';
     }
