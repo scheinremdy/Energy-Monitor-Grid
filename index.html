@@ -19,6 +19,42 @@
                 <input type="text" id="search-input" placeholder="Search for recipes..." onkeyup="searchRecipes()">
                 <button id="search-button" onclick="searchRecipes()">Search</button>
             </div>
+            <div class="filters">
+                <label for="meal-type">Meal Type:</label>
+                <select id="meal-type" onchange="applyFilters()">
+                    <option value="">All</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snack">Snack</option>
+                </select>
+
+                <label for="cuisine">Cuisine:</label>
+                <select id="cuisine" onchange="applyFilters()">
+                    <option value="">All</option>
+                    <option value="italian">Italian</option>
+                    <option value="mexican">Mexican</option>
+                    <option value="asian">Asian</option>
+                    <!-- Add more cuisines as needed -->
+                </select>
+
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty" onchange="applyFilters()">
+                    <option value="">All</option>
+                    <option value="easy">Easy</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+
+                <label for="dietary">Dietary Restrictions:</label>
+                <select id="dietary" onchange="applyFilters()">
+                    <option value="">All</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="glutenFree">Gluten-Free</option>
+                    <!-- Add more dietary restrictions as needed -->
+                </select>
+            </div>
         </header>
 
         <!-- Recipe Cards Section -->
@@ -35,6 +71,30 @@
                 <div id="recipe-details"></div>
                 <div id="recipe-ingredients"></div>
                 <div id="recipe-instructions"></div>
+
+                <!-- Ratings and Comments Section -->
+                <div id="recipe-comments">
+                    <h3>Comments:</h3>
+                    <textarea id="comment-box" placeholder="Add a comment..."></textarea>
+                    <button onclick="submitComment()">Submit Comment</button>
+                    <h3>Ratings:</h3>
+                    <button onclick="rateRecipe(1)">⭐ 1</button>
+                    <button onclick="rateRecipe(2)">⭐ 2</button>
+                    <button onclick="rateRecipe(3)">⭐ 3</button>
+                    <button onclick="rateRecipe(4)">⭐ 4</button>
+                    <button onclick="rateRecipe(5)">⭐ 5</button>
+                </div>
+                <button onclick="generateShoppingList()">Generate Shopping List</button>
+            </div>
+        </div>
+
+        <!-- Shopping List Modal -->
+        <div id="shopping-list-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeShoppingListModal()">&times;</span>
+                <h2>Shopping List</h2>
+                <ul id="shopping-list"></ul>
+                <button onclick="downloadShoppingList()">Download List</button>
             </div>
         </div>
     </div>
