@@ -7,55 +7,43 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Language Toggle Button -->
-    <button id="toggle-lang" onclick="toggleLanguage()">Switch to Deutsch</button>
-
-    <!-- Main Header -->
-    <header>
+  <header>
+    <div class="header-container">
       <h1 id="app-title">Recipe Finder & Meal Planner</h1>
-      <p id="intro-text">Find your favorite meals here! Enter ingredients you have at home, and we'll help you discover delicious recipes.</p>
-    </header>
+      <button id="toggle-lang-button">Switch to Deutsch</button>
+    </div>
+  </header>
 
-    <!-- Search Section -->
-    <section class="search-section">
-      <div class="input-group">
-        <label for="meal-type">Choose Meal Type: </label>
-        <select id="meal-type">
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <input type="text" id="ingredients" placeholder="Enter ingredients (e.g., chicken, tomato)" />
-      </div>
-      <button id="search-button" class="button">Search</button>
+  <main>
+    <section id="intro">
+      <p id="intro-text">Find your favorite meals here! Enter ingredients you have at home, and we'll help you discover delicious recipes.</p>
+      <input type="text" id="search-input" placeholder="Enter ingredients..." />
+      <button id="search-button">Search Recipes</button>
     </section>
 
-    <!-- Recipe Cards -->
-    <section id="recipe-cards" class="recipe-cards"></section>
+    <section id="recipe-container" class="recipe-container">
+      <!-- Recipe Cards will be injected here -->
+    </section>
 
-    <!-- Recipe Detail Modal -->
-    <div id="recipe-modal" class="recipe-modal">
-      <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2 id="recipe-title"></h2>
-        <img id="recipe-image" class="recipe-image" />
-        <p id="recipe-time"></p>
-        <h3>Ingredients:</h3>
-        <ul id="recipe-ingredients"></ul>
-        <h3>Instructions:</h3>
-        <p id="recipe-instructions"></p>
-        <button id="recommendations-button" class="button">See Recommendations</button>
-        <div id="recommendations-section" class="recommendations-section"></div>
+    <section id="favorites-section">
+      <h2>Favorites</h2>
+      <div id="favorites-container">
+        <!-- Favorite Recipes will be injected here -->
       </div>
-    </div>
+    </section>
+  </main>
 
-    <!-- Footer -->
-    <footer>
-      <p id="footer-text">Created with 💻 by Sunshine Remollo</p>
-    </footer>
+  <footer>
+    <p id="footer-text">Created with 💻 by Sunshine Remollo</p>
+  </footer>
+
+  <div id="recipe-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2 id="modal-title"></h2>
+      <div id="modal-ingredients"></div>
+      <div id="modal-instructions"></div>
+    </div>
   </div>
 
   <script src="app.js"></script>
