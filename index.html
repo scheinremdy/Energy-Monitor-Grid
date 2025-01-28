@@ -9,8 +9,17 @@
 <body>
     <div class="app-container">
         <header>
-            <h1>Recipe Finder & Meal Planner</h1>
+            <h1 id="app-title">Recipe Finder & Meal Planner</h1>
+            <div class="language-toggle">
+                <button id="toggle-lang" onclick="toggleLanguage()">Switch to Deutsch</button>
+            </div>
         </header>
+
+        <section id="intro">
+            <p id="intro-text">
+                Welcome to the Recipe Finder & Meal Planner. This app helps you find recipes based on ingredients you have at home.
+            </p>
+        </section>
 
         <div class="search-section">
             <input type="text" id="ingredient-input" placeholder="Enter ingredients (e.g., chicken, cheese)" class="search-input" />
@@ -25,6 +34,10 @@
             <h2>Favorite Recipes</h2>
             <div id="favorites-list" class="favorites-list"></div>
         </section>
+
+        <footer>
+            <p id="footer-text">Created with 💻 by Sunshine Remollo</p>
+        </footer>
     </div>
 
     <script src="app.js"></script>
