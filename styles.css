@@ -28,12 +28,18 @@ header {
     cursor: pointer;
 }
 
-.language-toggle {
-    text-align: right;
-    margin-bottom: 10px;
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
 }
 
-#recipes-container {
+.filters select {
+    padding: 10px;
+}
+
+.recipe-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
@@ -108,16 +114,38 @@ header {
     object-fit: cover;
 }
 
-#recipe-details {
+#recipe-details, #recipe-ingredients, #recipe-instructions {
     margin-top: 10px;
 }
 
-.dark-mode {
-    background-color: #121212;
-    color: white;
+#recipe-comments {
+    margin-top: 20px;
 }
 
-.light-mode {
-    background-color: white;
-    color: black;
+#comment-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#shopping-list-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+#shopping-list-modal .modal-content {
+    width: 40%;
+}
+
+#shopping-list {
+    list-style-type: none;
+    padding: 0;
 }
