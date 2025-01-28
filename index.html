@@ -6,10 +6,10 @@
     <title>Electric Grid Load Projector</title>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Your Custom JavaScript -->
-    <script defer src="script.js"></script>
-    <!-- Link to CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Custom JS -->
+    <script defer src="script.js"></script>
 </head>
 <body>
     <header>
@@ -17,9 +17,19 @@
     </header>
     <div class="container">
         <div class="info">
-            <p>The Electric Grid Load Projector helps communities visualize energy consumption trends and forecast future demand. 
-            It displays current grid loads and predicted usage to aid in managing electricity distribution efficiently. 
-            Use the charts below to analyze data and adjust settings as needed.</p>
+            <h2>What is this Project About?</h2>
+            <p>The Electric Grid Load Projector is a tool designed to visualize energy consumption trends and forecast future demand. 
+            By analyzing this data, communities can better manage their electricity distribution and prepare for peak hours. 
+            It provides a clear view of the current load and projected usage for different countries: Germany, USA, and the Philippines.</p>
+        </div>
+
+        <div class="controls">
+            <label for="countrySelect">Select Country:</label>
+            <select id="countrySelect">
+                <option value="Germany">Germany</option>
+                <option value="USA">USA</option>
+                <option value="Philippines">Philippines</option>
+            </select>
         </div>
 
         <div class="charts">
@@ -36,6 +46,12 @@
         <div class="buttons">
             <button id="infoBtn">Info</button>
             <button id="helpBtn">Help</button>
+        </div>
+
+        <div class="help-section" id="helpSection">
+            <h2>Help Section</h2>
+            <p>Use the dropdown menu to select a country and view its energy load data. The "Current Grid Load" chart shows the current electricity usage, 
+            while the "Forecasted Load" chart predicts future energy demands. If you need assistance or want to understand the data better, click the "Info" button.</p>
         </div>
     </div>
 
