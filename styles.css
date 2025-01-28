@@ -1,8 +1,9 @@
+/* General Styles */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f8f8f8;
+  background-color: #f0f4f8;
   display: flex;
   justify-content: center;
 }
@@ -15,43 +16,61 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 header h1 {
   font-size: 3rem;
-  color: #333;
+  color: #222;
+  margin-bottom: 10px;
 }
 
 header p {
   font-size: 1.2rem;
-  color: #555;
+  color: #666;
+  margin-bottom: 20px;
 }
 
-section {
-  margin-top: 30px;
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 
-#meal-type,
-#ingredients {
+.input-group {
+  flex: 1;
+  margin: 0 10px;
+  min-width: 250px;
+}
+
+.input-group select,
+.input-group input {
+  width: 100%;
   padding: 12px;
   font-size: 1rem;
-  margin-right: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
-#search-button {
-  padding: 12px 18px;
+.input-group input {
+  margin-top: 10px;
+}
+
+.button {
+  padding: 15px 25px;
   font-size: 1rem;
-  cursor: pointer;
-  background-color: #3b8e32;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
-#search-button:hover {
-  background-color: #2a6b24;
+.button:hover {
+  background-color: #45a049;
 }
 
 #recipe-cards {
@@ -63,29 +82,33 @@ section {
 
 .recipe-card {
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
 .recipe-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
 .recipe-card img {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 12px;
+  object-fit: cover;
+  height: 200px;
 }
 
 .recipe-card h3 {
   font-size: 1.2rem;
   color: #333;
+  margin-top: 15px;
+  font-weight: bold;
 }
 
 .recipe-modal {
@@ -95,53 +118,96 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .modal-content {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 700px;
   width: 100%;
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .close-btn {
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 20px;
   font-size: 2rem;
   cursor: pointer;
 }
 
-#recommendations-section {
+#recipe-title {
+  font-size: 2rem;
+  color: #333;
+}
+
+.recipe-image {
+  width: 100%;
+  border-radius: 10px;
+  height: 300px;
+  object-fit: cover;
   margin-top: 20px;
 }
 
-#recommendations-button {
-  padding: 12px 18px;
+#recipe-ingredients {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
   font-size: 1rem;
-  background-color: #3b8e32;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: #555;
 }
 
-#recommendations-button:hover {
-  background-color: #2a6b24;
+#recipe-instructions {
+  font-size: 1rem;
+  color: #555;
+}
+
+.recommendations-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.recommendation-card {
+  width: 100%;
+  max-width: 250px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.recommendation-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.recommendation-card h4 {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  color: #333;
 }
 
 footer {
   text-align: center;
   margin-top: 50px;
   font-size: 1rem;
-}
-
-footer p {
   color: #555;
 }
