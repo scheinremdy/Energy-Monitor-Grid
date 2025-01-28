@@ -3,37 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electric Grid Load Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Plotly CDN -->
+    <title>Electric Grid Load Projector</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <!-- Language Toggle -->
-    <div class="language-toggle">
-        <button id="en-btn" onclick="changeLanguage('en')">English</button>
-        <button id="de-btn" onclick="changeLanguage('de')">Deutsch</button>
-    </div>
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header>
-        <h1 id="title">Electric Grid Load Dashboard</h1>
+        <div class="header-content">
+            <div class="header-left">
+                <h1>Electric Grid Load Projector</h1>
+                <p>Track Energy Consumption Trends and Forecasts</p>
+            </div>
+
+            <div class="header-right">
+                <div class="controls">
+                    <select id="countrySelect" class="country-select">
+                        <option value="USA">USA</option>
+                        <option value="Germany">Germany</option>
+                        <option value="India">India</option>
+                        <!-- Add more countries here -->
+                    </select>
+                    <button id="helpBtn" class="help-btn">?</button>
+                </div>
+                <div class="customize-view">
+                    <h2>Customize View</h2>
+                    <div class="date-range">
+                        <input type="date" id="startDate">
+                        <span>to</span>
+                        <input type="date" id="endDate">
+                        <button id="applyFilter" class="apply-btn">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- Real-Time Data Display Section -->
-    <section id="data-section">
-        <div class="data-container">
-            <h2 id="grid-load-heading">Current Grid Load</h2>
-            <p id="grid-load">Loading...</p>
-            <h3 id="carbon-intensity-heading">Carbon Intensity</h3>
-            <p id="carbon-intensity">Loading...</p>
-        </div>
-    </section>
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="content-wrapper">
+            <section id="grid-load">
+                <h2>Grid Load Trends</h2>
+                <canvas id="gridLoadChart"></canvas>
+            </section>
 
-    <!-- Chart Section -->
-    <section id="chart-section">
-        <h2>Grid Load Over Time</h2>
-        <div id="chart-container"></div>
-    </section>
+            <section id="forecast">
+                <h2>Forecasted Grid Load</h2>
+                <canvas id="forecastChart"></canvas>
+            </section>
+
+            <section id="summary">
+                <h2>Project Overview</h2>
+                <p>This project visualizes real-time and forecasted energy consumption of power grids.</p>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>Actual Grid Load: Visualize current energy consumption.</li>
+                    <li>Forecasted Load: See future energy usage predictions.</li>
+                    <li>Date Range Filter: Customize the view over any period.</li>
+                    <li>Country Selector: Choose the country to view specific grid load data.</li>
+                </ul>
+                <p><strong>Why is this important?</strong> Monitoring and forecasting grid load is critical to ensuring a stable and efficient energy supply, helping utilities better manage resources.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Created by Sunshine Remollo | GitHub | 2024</p>
+    </footer>
+
+    <!-- HELP MODAL -->
+    <div id="helpModal" class="help-modal">
+        <div class="help-modal-content">
+            <span id="closeBtn" class="close-btn">&times;</span>
+            <h2>Help</h2>
+            <p>This project simulates grid load insights. Here's what you can do:</p>
+            <ul>
+                <li><strong>Actual Grid Load:</strong> Displays current energy consumption in real time.</li>
+                <li><strong>Forecasted Grid Load:</strong> Predicts energy consumption in the coming days.</li>
+                <li><strong>Date Range Filter:</strong> Adjust the date range to see grid load trends over any period.</li>
+                <li><strong>Country Selector:</strong> Choose a country to view the corresponding grid load data.</li>
+            </ul>
+            <p><strong>Why is this important?</strong> Monitoring grid load ensures efficient energy management, preventing shortages and optimizing distribution.</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
