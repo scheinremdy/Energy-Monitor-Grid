@@ -1,3 +1,4 @@
+// script.js
 function getRandomData(size) {
     const data = [];
     for (let i = 0; i < size; i++) {
