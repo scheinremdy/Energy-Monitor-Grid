@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Electric Grid Load Projector</title>
   <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -14,6 +15,7 @@
   </header>
 
   <main>
+    <button id="toggleInfo">ℹ️ Toggle Info</button>
     <section id="info">
       <h2>Info</h2>
       <p>Select a country to view real-time carbon intensity data for its electricity grid. This tool uses API data to provide accurate, live insights.</p>
@@ -26,6 +28,7 @@
 
     <section id="controls">
       <h2>Options</h2>
+      <label for="countrySelector">Select Country:</label>
       <select id="countrySelector">
         <option value="DE">Germany</option>
         <option value="PH">Philippines</option>
@@ -34,9 +37,10 @@
       </select>
     </section>
 
+    <button id="toggleHelp">❓ Toggle Help</button>
     <section id="help">
       <h2>Help</h2>
-      <p>If you encounter issues or need guidance, ensure your internet connection is active and the correct API key is in use.</p>
+      <p>If you encounter issues, ensure your internet connection is active and the correct API key is in use.</p>
     </section>
   </main>
 
