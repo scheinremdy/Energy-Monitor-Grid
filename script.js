@@ -1,85 +1,77 @@
-const apiUrl = "https://api.electricitymap.org/v3/carbon-intensity/latest";
-const apiKey = "MakfcOXh4uwGgbVlnXYD"; // Replace with a valid API key
-const countrySelector = document.getElementById("countrySelector");
-const canvas = document.getElementById("carbonChart").getContext("2d");
+let language = 'en'; // Default language
 
-let chart;
+// Data fetching function
+async function fetchGridData() {
+    const apiKey = '0MEaY3Tw2VaeCTyRP3FFbHqVl7G6kyX7x95BArD4'; // Replace with your actual API key
+    const apiUrl = `https://api.electricitymap.org/v3/carbon-intensity?apikey=${apiKey}`;
 
-// **Fetch Data from API**
-async function fetchCarbonData(zone) {
-  try {
-    const response = await fetch(`${apiUrl}?zone=${zone}`, {
-      method: "GET",
-      headers: { "auth-token": apiKey },
-    });
-
-    if (!response.ok) throw new Error(`Error fetching data: ${response.status}`);
-    const data = await response.json();
-
-    if (!data || !data.data || typeof data.data.carbonIntensity === "undefined") {
-      throw new Error("Invalid API response format.");
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        updateDataSection(data);
+        updateChart(data);
+    } catch (error) {
+        console.error("Error fetching data:", error);
     }
+}
 
-    return {
-      carbonIntensity: data.data.carbonIntensity,
-      timestamp: data.data.datetime,
+// Update Data Section
+function updateDataSection(data) {
+    const gridLoadElement = document.getElementById('grid-load');
+    const carbonIntensityElement = document.getElementById('carbon-intensity');
+
+    const gridLoad = data.data[0].load; // Example of data structure
+    const carbonIntensity = data.data[0].carbon_intensity; // Example of data structure
+
+    gridLoadElement.textContent = `${gridLoad} MW`;
+    carbonIntensityElement.textContent = `${carbonIntensity} gCO2/kWh`;
+}
+
+// Update Chart (Using Plotly.js)
+function updateChart(data) {
+    const gridLoadData = data.data.map(entry => entry.load);
+    const timestamps = data.data.map(entry => entry.timestamp);
+
+    const trace = {
+        x: timestamps,
+        y: gridLoadData,
+        type: 'scatter',
+        mode: 'lines',
+        line: { color: '#4CAF50' }
     };
-  } catch (error) {
-    console.error("Fetch error:", error);
-    alert("Failed to fetch data. Please check the API key or network connection.");
-    return null;
-  }
+
+    const layout = {
+        title: 'Grid Load Over Time',
+        xaxis: { title: 'Time' },
+        yaxis: { title: 'Grid Load (MW)' }
+    };
+
+    Plotly.newPlot('chart-container', [trace], layout);
 }
 
-// **Update the Chart**
-async function updateChart(zone) {
-  const data = await fetchCarbonData(zone);
-  if (!data) return;
-
-  const timestamp = new Date(data.timestamp).toLocaleTimeString(); // Format timestamp
-  const carbonIntensity = data.carbonIntensity;
-
-  if (chart) {
-    chart.data.labels.push(timestamp);
-    chart.data.datasets[0].data.push(carbonIntensity);
-    chart.update();
-  } else {
-    createChart([timestamp], [carbonIntensity]);
-  }
+// Language Change Function
+function changeLanguage(lang) {
+    language = lang;
+    updateText();
 }
 
-// **Create the Chart**
-function createChart(labels, data) {
-  chart = new Chart(canvas, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Carbon Intensity (gCO2eq/kWh)",
-          data: data,
-          borderColor: "#4CAF50",
-          backgroundColor: "rgba(76, 175, 80, 0.2)",
-          fill: true,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: { title: { display: true, text: "Time" } },
-        y: { title: { display: true, text: "Carbon Intensity" } },
-      },
-    },
-  });
+// Update Text Based on Language
+function updateText() {
+    const title = document.getElementById('title');
+    const gridLoadHeading = document.getElementById('grid-load-heading');
+    const carbonIntensityHeading = document.getElementById('carbon-intensity-heading');
+
+    if (language === 'de') {
+        title.textContent = "Elektrizitätsnetz Lasten-Dashboard";
+        gridLoadHeading.textContent = "Aktuelle Netzlast";
+        carbonIntensityHeading.textContent = "Kohlenstoffintensität";
+    } else {
+        title.textContent = "Electric Grid Load Dashboard";
+        gridLoadHeading.textContent = "Current Grid Load";
+        carbonIntensityHeading.textContent = "Carbon Intensity";
+    }
 }
 
-// **Event Listener for Country Selection**
-countrySelector.addEventListener("change", (event) => {
-  const selectedCountry = event.target.value;
-  updateChart(selectedCountry);
-});
-
-// **Initialize with Germany's Data**
-updateChart("DE");
+// Initial Data Fetch
+fetchGridData();
+setInterval(fetchGridData, 60000); // Refresh data every minute
