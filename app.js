@@ -6,6 +6,7 @@ const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_K
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
 const recipeContainer = document.getElementById('recipe-container');
+const recommendationsContainer = document.getElementById('recommendations-container');
 const favoritesContainer = document.getElementById('favorites-container');
 const toggleLangButton = document.getElementById('toggle-lang-button');
 const appTitle = document.getElementById('app-title');
@@ -27,10 +28,10 @@ toggleLangButton.addEventListener('click', toggleLanguage);
 async function searchRecipes() {
   const query = searchInput.value.trim();
   if (!query) return;
-  
+
   const response = await fetch(`${apiUrl}${query}`);
   const data = await response.json();
-  
+
   if (data.results.length === 0) {
     alert('No recipes found!');
     return;
@@ -49,50 +50,43 @@ function displayRecipes(recipes) {
       <img src="${recipe.image}" alt="${recipe.title}">
       <h3>${recipe.title}</h3>
       <p>Ready in ${recipe.readyInMinutes} minutes</p>
-      <button class="view-recipe-btn" data-id="${recipe.id}">View Recipe</button>
-      <button class="add-to-favorites-btn" data-id="${recipe.id}">Add to Favorites</button>
+      <button onclick="openRecipeModal(${recipe.id})">View Recipe</button>
     `;
     recipeContainer.appendChild(recipeCard);
+  });
 
-    // View Recipe Button Listener
-    const viewRecipeButton = recipeCard.querySelector('.view-recipe-btn');
-    viewRecipeButton.addEventListener('click', () => viewRecipeDetails(recipe.id));
-
-    // Add to Favorites Button Listener
-    const addToFavoritesButton = recipeCard.querySelector('.add-to-favorites-btn');
-    addToFavoritesButton.addEventListener('click', () => addToFavorites(recipe));
+  // Show recommendations (for demo purposes, we'll show a static list)
+  const recommendations = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
+  recommendationsContainer.innerHTML = '';
+  recommendations.forEach(rec => {
+    const recCard = document.createElement('div');
+    recCard.classList.add('recipe-card');
+    recCard.innerHTML = `
+      <h3>${rec}</h3>
+      <button>Explore</button>
+    `;
+    recommendationsContainer.appendChild(recCard);
   });
 }
 
-// View Recipe Details in Modal
-async function viewRecipeDetails(id) {
-  const response = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`);
-  const data = await response.json();
+// Open Recipe Modal
+async function openRecipeModal(recipeId) {
+  const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${API_KEY}`);
+  const recipe = await response.json();
 
-  modalTitle.innerText = data.title;
-  modalIngredients.innerHTML = `<strong>Ingredients:</strong><ul>${data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('')}</ul>`;
-  modalInstructions.innerHTML = `<strong>Instructions:</strong><p>${data.instructions}</p>`;
-  
+  modalTitle.innerText = recipe.title;
+  modalIngredients.innerHTML = `<strong>Ingredients:</strong><ul>${recipe.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('')}</ul>`;
+  modalInstructions.innerHTML = `<strong>Instructions:</strong><p>${recipe.instructions}</p>`;
+
   recipeModal.style.display = 'flex';
 }
 
-// Close Modal
+// Close Recipe Modal
 closeBtn.addEventListener('click', () => {
   recipeModal.style.display = 'none';
 });
 
-// Add to Favorites
-function addToFavorites(recipe) {
-  const favoriteRecipe = document.createElement('div');
-  favoriteRecipe.classList.add('recipe-card');
-  favoriteRecipe.innerHTML = `
-    <img src="${recipe.image}" alt="${recipe.title}">
-    <h3>${recipe.title}</h3>
-  `;
-  favoritesContainer.appendChild(favoriteRecipe);
-}
-
-// Toggle Language Function
+// Toggle Language
 function toggleLanguage() {
   const currentLang = toggleLangButton.innerText;
   if (currentLang === 'Switch to Deutsch') {
