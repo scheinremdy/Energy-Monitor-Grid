@@ -1,59 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recipe Finder & Meal Planner</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder & Meal Planner</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="header-container">
-      <h1 id="app-title">Recipe Finder & Meal Planner</h1>
-      <button id="toggle-lang-button">Switch to Deutsch</button>
+    <div class="app-container">
+        <!-- Language Toggle Button -->
+        <div class="language-toggle">
+            <button id="toggle-lang" onclick="toggleLanguage()">Switch Language</button>
+        </div>
+
+        <header>
+            <h1>Find Your Favorite Meals</h1>
+            <div>
+                <input type="text" id="search-input" placeholder="Search for recipes..." onkeyup="searchRecipes()">
+                <button id="search-button" onclick="searchRecipes()">Search</button>
+            </div>
+        </header>
+
+        <!-- Recipe Cards Section -->
+        <div id="recipes-container" class="recipe-container">
+            <!-- Recipe cards will dynamically load here -->
+        </div>
+
+        <!-- Recipe Modal for Details -->
+        <div id="recipe-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="recipe-title"></h2>
+                <img id="recipe-image" src="" alt="Recipe Image">
+                <div id="recipe-details"></div>
+                <div id="recipe-ingredients"></div>
+                <div id="recipe-instructions"></div>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main>
-    <section id="intro">
-      <p id="intro-text">Find your favorite meals here! Enter ingredients you have at home, and we'll help you discover delicious recipes.</p>
-      <input type="text" id="search-input" placeholder="Enter ingredients..." />
-      <button id="search-button">Search Recipes</button>
-    </section>
-
-    <section id="recipe-container" class="recipe-container">
-      <!-- Recipe Cards will be injected here -->
-    </section>
-
-    <section id="recommendations">
-      <h2>Trending Recipes</h2>
-      <div id="recommendations-container">
-        <!-- Trending Recipe Cards will be injected here -->
-      </div>
-    </section>
-
-    <section id="favorites-section">
-      <h2>Favorites</h2>
-      <div id="favorites-container">
-        <!-- Favorite Recipes will be injected here -->
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p id="footer-text">Created with 💻 by Sunshine Remollo</p>
-  </footer>
-
-  <div id="recipe-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2 id="modal-title"></h2>
-      <div id="modal-ingredients"></div>
-      <div id="modal-instructions"></div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
