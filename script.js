@@ -1,67 +1,53 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const helpBtn = document.getElementById('helpBtn');
-    const helpModal = document.getElementById('helpModal');
-    const closeBtn = document.getElementById('closeBtn');
-    const countrySelect = document.getElementById('countrySelect');
-    const gridLoadChartElement = document.getElementById('gridLoadChart');
-    const forecastChartElement = document.getElementById('forecastChart');
+function getRandomData(size) {
+    const data = [];
+    for (let i = 0; i < size; i++) {
+        data.push(Math.floor(Math.random() * 100) + 50);
+    }
+    return data;
+}
 
-    let gridLoadChart, forecastChart;
-
-    // Help Modal Logic
-    helpBtn.addEventListener('click', function () {
-        helpModal.style.display = 'block';
-    });
-
-    closeBtn.addEventListener('click', function () {
-        helpModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target === helpModal) {
-            helpModal.style.display = 'none';
+function createChart(ctx, label, data, color) {
+    return new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: data.length }, (_, i) => `Hour ${i + 1}`),
+            datasets: [{
+                label: label,
+                data: data,
+                borderColor: color,
+                borderWidth: 2,
+                fill: false,
+                tension: 0.2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: { display: true, text: 'Time (Hours)' }
+                },
+                y: {
+                    title: { display: true, text: 'Load (MW)' }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
         }
     });
+}
 
-    // Chart Update Logic
-    function updateChartsForCountry(country) {
-        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-        const gridData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 500));
-        const forecastData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 500));
+document.addEventListener('DOMContentLoaded', function () {
+    const gridLoadCtx = document.getElementById('gridLoadChart').getContext('2d');
+    const forecastCtx = document.getElementById('forecastChart').getContext('2d');
 
-        if (gridLoadChart) gridLoadChart.destroy();
-        if (forecastChart) forecastChart.destroy();
+    const gridData = getRandomData(10);
+    const forecastData = getRandomData(10);
 
-        gridLoadChart = new Chart(gridLoadChartElement, {
-            type: 'line',
-            data: {
-                labels,
-                datasets: [{
-                    label: 'Actual Grid Load (MW)',
-                    data: gridData,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2
-                }]
-            }
-        });
-
-        forecastChart = new Chart(forecastChartElement, {
-            type: 'line',
-            data: {
-                labels,
-                datasets: [{
-                    label: 'Forecasted Grid Load (MW)',
-                    data: forecastData,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 2
-                }]
-            }
-        });
-    }
-
-    countrySelect.addEventListener('change', function () {
-        updateChartsForCountry(countrySelect.value);
-    });
-
-    updateChartsForCountry('USA');
+    createChart(gridLoadCtx, 'Grid Load (Current)', gridData, 'rgba(75, 192, 192, 1)');
+    createChart(forecastCtx, 'Forecasted Load', forecastData, 'rgba(255, 99, 132, 1)');
 });
