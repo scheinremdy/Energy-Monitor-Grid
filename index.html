@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electric Grid Load Projector</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electric Grid Load Projector</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Electric Grid Load Projector</h1>
-    </header>
-    <div class="container">
-        <div class="info">
-            <button id="infoBtn">Info</button>
-            <button id="helpBtn">Help</button>
-            <p id="infoText" class="hidden">
-                The Electric Grid Load Projector visualizes real-time electricity grid data from different countries, helping with efficient energy management.
-            </p>
-            <p id="helpText" class="hidden">
-                Use the dropdown menu to select a country and view the current energy consumption. The charts show power distribution and grid usage.
-            </p>
-        </div>
+  <header>
+    <h1>Electric Grid Load Projector</h1>
+    <p>Real-time Carbon Intensity Data</p>
+  </header>
 
-        <div class="selector">
-            <label for="country">Select Country:</label>
-            <select id="country">
-                <option value="Germany">Germany</option>
-                <option value="Philippines">Philippines</option>
-                <option value="USA">USA</option>
-                <option value="India">India</option>
-                <option value="Canada">Canada</option>
-            </select>
-        </div>
+  <main>
+    <section id="info">
+      <h2>Info</h2>
+      <p>Select a country to view real-time carbon intensity data for its electricity grid. This tool uses API data to provide accurate, live insights.</p>
+    </section>
 
-        <div class="charts">
-            <canvas id="gridLoadChart"></canvas>
-        </div>
-    </div>
-    <footer>
-        &copy; 2025 Electric Grid Load Projector. All Rights Reserved.
-    </footer>
-    <script src="script.js"></script>
+    <section id="chart-container">
+      <h2>Real-Time Chart</h2>
+      <canvas id="carbonChart"></canvas>
+    </section>
+
+    <section id="controls">
+      <h2>Options</h2>
+      <select id="countrySelector">
+        <option value="DE">Germany</option>
+        <option value="PH">Philippines</option>
+        <option value="FR">France</option>
+        <option value="US">United States</option>
+      </select>
+    </section>
+
+    <section id="help">
+      <h2>Help</h2>
+      <p>If you encounter issues or need guidance, ensure your internet connection is active and the correct API key is in use.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Powered by Electricity Map API</p>
+  </footer>
 </body>
 </html>
