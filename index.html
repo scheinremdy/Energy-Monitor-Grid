@@ -8,83 +8,37 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
-    <!-- HEADER -->
     <header>
-        <div class="header-content">
-            <div class="header-left">
-                <h1>Electric Grid Load Projector</h1>
-                <p>Track Energy Consumption Trends and Forecasts</p>
-            </div>
-
-            <div class="header-right">
-                <div class="controls">
-                    <select id="countrySelect" class="country-select">
-                        <option value="USA">USA</option>
-                        <option value="Germany">Germany</option>
-                        <option value="India">India</option>
-                    </select>
-                    <button id="helpBtn" class="help-btn">?</button>
-                </div>
-                <div class="customize-view">
-                    <h2>Customize View</h2>
-                    <div class="date-range">
-                        <input type="date" id="startDate">
-                        <span>to</span>
-                        <input type="date" id="endDate">
-                        <button id="applyFilter" class="apply-btn">Apply</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h1>Electric Grid Load Projector</h1>
     </header>
-
-    <!-- MAIN CONTENT -->
-    <main>
-        <div class="content-wrapper">
-            <section id="grid-load">
-                <h2>Grid Load Trends</h2>
-                <canvas id="gridLoadChart"></canvas>
-            </section>
-
-            <section id="forecast">
-                <h2>Forecasted Grid Load</h2>
-                <canvas id="forecastChart"></canvas>
-            </section>
-
-            <section id="summary">
-                <h2>Project Overview</h2>
-                <p>This project visualizes real-time and forecasted energy consumption of power grids.</p>
-                <ul>
-                    <li>Actual Grid Load: Visualize current energy consumption.</li>
-                    <li>Forecasted Load: See future energy usage predictions.</li>
-                    <li>Date Range Filter: Customize the view over any period.</li>
-                    <li>Country Selector: Choose the country to view specific grid load data.</li>
-                </ul>
-            </section>
+    <div class="container">
+        <div class="info">
+            <p>The Electric Grid Load Projector helps communities visualize energy consumption trends and forecast future demand. 
+            It displays current grid loads and predicted usage to aid in managing electricity distribution efficiently. 
+            Use the charts below to analyze data and adjust settings as needed.</p>
         </div>
-    </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>Created by Sunshine Remollo | GitHub | 2024</p>
-    </footer>
+        <div class="charts">
+            <div class="chart-container">
+                <h3>Current Grid Load</h3>
+                <canvas id="gridLoadChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Forecasted Load</h3>
+                <canvas id="forecastChart"></canvas>
+            </div>
+        </div>
 
-    <!-- HELP MODAL -->
-    <div id="helpModal" class="help-modal">
-        <div class="help-modal-content">
-            <span id="closeBtn" class="close-btn">&times;</span>
-            <h2>Help</h2>
-            <p>This project simulates grid load insights. Here's what you can do:</p>
-            <ul>
-                <li>Actual Grid Load: Displays current energy consumption in real time.</li>
-                <li>Forecasted Grid Load: Predicts energy consumption in the coming days.</li>
-                <li>Date Range Filter: Adjust the date range to see grid load trends over any period.</li>
-                <li>Country Selector: Choose a country to view corresponding grid load data.</li>
-            </ul>
+        <div class="buttons">
+            <button id="infoBtn">Info</button>
+            <button id="helpBtn">Help</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <footer>
+        &copy; 2025 Electric Grid Load Projector. All Rights Reserved.
+    </footer>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
