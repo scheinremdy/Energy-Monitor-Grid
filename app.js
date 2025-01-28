@@ -4,6 +4,10 @@ const ingredientInput = document.getElementById('ingredient-input');
 const recipeList = document.getElementById('recipe-list');
 const loadingSpinner = document.getElementById('loading');
 const favoritesList = document.getElementById('favorites-list');
+const introText = document.getElementById('intro-text');
+const appTitle = document.getElementById('app-title');
+const footerText = document.getElementById('footer-text');
+const toggleLangButton = document.getElementById('toggle-lang');
 
 // Function to fetch recipes from the Spoonacular API
 async function fetchRecipes(ingredients) {
@@ -65,27 +69,44 @@ function removeFromFavorites(id) {
 
 // Function to display the favorites list
 function displayFavorites() {
-    favoritesList.innerHTML = '';
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favoritesList.innerHTML = '';
     favorites.forEach(favorite => {
         const favoriteCard = document.createElement('div');
         favoriteCard.classList.add('favorites-card');
         favoriteCard.innerHTML = `
             <img src="${favorite.image}" alt="${favorite.title}" />
             <h3>${favorite.title}</h3>
-            <button onclick="removeFromFavorites('${favorite.id}')">Remove from Favorites</button>
+            <button onclick="removeFromFavorites(${favorite.id})">Remove</button>
         `;
         favoritesList.appendChild(favoriteCard);
     });
 }
 
-// Event listener for the search button
+// Event listeners
 searchButton.addEventListener('click', () => {
     const ingredients = ingredientInput.value.trim().replace(/\s+/g, ',');
     if (ingredients) {
         fetchRecipes(ingredients);
+    } else {
+        alert("Please enter ingredients to search for recipes.");
     }
 });
 
-// Display favorites on page load
-document.addEventListener('DOMContentLoaded', displayFavorites);
+// Language toggle function
+function toggleLanguage() {
+    if (appTitle.innerHTML === 'Recipe Finder & Meal Planner') {
+        appTitle.innerHTML = 'Rezeptfinder & Essensplaner';
+        introText.innerHTML = 'Willkommen beim Rezeptfinder & Essensplaner. Diese App hilft Ihnen, Rezepte basierend auf den Zutaten zu finden, die Sie zu Hause haben.';
+        footerText.innerHTML = 'Erstellt mit 💻 von Sunshine Remollo';
+        toggleLangButton.innerHTML = 'Switch to English';
+    } else {
+        appTitle.innerHTML = 'Recipe Finder & Meal Planner';
+        introText.innerHTML = 'Welcome to the Recipe Finder & Meal Planner. This app helps you find recipes based on ingredients you have at home.';
+        footerText.innerHTML = 'Created with 💻 by Sunshine Remollo';
+        toggleLangButton.innerHTML = 'Switch to Deutsch';
+    }
+}
+
+// Initial load
+displayFavorites();
