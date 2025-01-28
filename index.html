@@ -1,45 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Finder & Meal Planner</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Finder & Meal Planner</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-container">
-        <header>
-            <h1 id="app-title">Recipe Finder & Meal Planner</h1>
-            <div class="language-toggle">
-                <button id="toggle-lang" onclick="toggleLanguage()">Switch to Deutsch</button>
-            </div>
-        </header>
+  <div class="container">
+    <!-- Language Toggle Button -->
+    <button id="toggle-lang" onclick="toggleLanguage()">Switch to Deutsch</button>
 
-        <section id="intro">
-            <p id="intro-text">
-                Find your favorite meals here! Enter ingredients you have at home, and we'll help you discover delicious recipes.
-            </p>
-        </section>
+    <!-- Main Header -->
+    <header>
+      <h1 id="app-title">Recipe Finder & Meal Planner</h1>
+      <p id="intro-text">Find your favorite meals here! Enter ingredients you have at home, and we'll help you discover delicious recipes.</p>
+    </header>
 
-        <div class="search-section">
-            <input type="text" id="ingredient-input" placeholder="Enter ingredients (e.g., chicken, cheese)" class="search-input" />
-            <button id="search-button" class="search-button">Find Recipes</button>
-        </div>
+    <!-- Search Section -->
+    <section>
+      <label for="meal-type">Choose Meal Type: </label>
+      <select id="meal-type">
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="dinner">Dinner</option>
+      </select>
+      <input type="text" id="ingredients" placeholder="Enter ingredients (e.g., chicken, tomato)" />
+      <button id="search-button">Search</button>
+    </section>
 
-        <div id="loading" class="loading">Loading...</div>
+    <!-- Recipe Cards -->
+    <section id="recipe-cards" class="recipe-cards"></section>
 
-        <div id="recipe-list" class="recipe-list"></div>
-
-        <section id="favorites-section" class="favorites-section">
-            <h2>Favorite Recipes</h2>
-            <div id="favorites-list" class="favorites-list"></div>
-        </section>
-
-        <footer>
-            <p id="footer-text">Created with 💻 by Sunshine Remollo</p>
-        </footer>
+    <!-- Recipe Detail Modal -->
+    <div id="recipe-modal" class="recipe-modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 id="recipe-title"></h2>
+        <img id="recipe-image" />
+        <p id="recipe-time"></p>
+        <h3>Ingredients:</h3>
+        <ul id="recipe-ingredients"></ul>
+        <h3>Instructions:</h3>
+        <p id="recipe-instructions"></p>
+      </div>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Footer -->
+    <footer>
+      <p id="footer-text">Created with 💻 by Sunshine Remollo</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
