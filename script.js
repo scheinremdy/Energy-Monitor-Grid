@@ -1,14 +1,15 @@
 const apiUrl = "https://api.electricitymap.org/v3/carbon-intensity/latest";
-const apiKey = "MakfcOXh4uwGgbVlnXYD";
+const apiKey = "MakfcOXh4uwGgbVlnXYD"; // Replace with a valid API key
 const countrySelector = document.getElementById("countrySelector");
-const canvas = document.getElementById("carbonChart");
+const canvas = document.getElementById("carbonChart").getContext("2d");
 const infoSection = document.getElementById("info");
 const helpSection = document.getElementById("help");
 const infoToggle = document.getElementById("toggleInfo");
 const helpToggle = document.getElementById("toggleHelp");
+
 let chart;
 
-// Fetch data from the API
+// **Fetch Data from API**
 async function fetchCarbonData(zone) {
   try {
     const response = await fetch(`${apiUrl}?zone=${zone}`, {
@@ -20,20 +21,25 @@ async function fetchCarbonData(zone) {
 
     const data = await response.json();
     console.log("API Response:", data); // Debugging
-    return data.data ? data.data : null; // Ensure data structure is correct
+
+    if (!data || !data.data || typeof data.data.carbonIntensity === "undefined") {
+      throw new Error("Invalid API response format.");
+    }
+
+    return data.data;
   } catch (error) {
-    console.error("Failed to fetch data:", error);
+    console.error("Fetch error:", error);
     alert("Failed to fetch data. Please check the API key or network connection.");
     return null;
   }
 }
 
-// Update the chart with new data
+// **Update the Chart**
 async function updateChart(zone) {
   const data = await fetchCarbonData(zone);
   if (!data) return;
 
-  const timestamp = new Date(data.timestamp).toLocaleString();
+  const timestamp = new Date().toLocaleString(); // Current timestamp
   const carbonIntensity = data.carbonIntensity;
 
   if (chart) {
@@ -45,7 +51,7 @@ async function updateChart(zone) {
   }
 }
 
-// Create the chart
+// **Create the Chart**
 function createChart(labels, data) {
   chart = new Chart(canvas, {
     type: "line",
@@ -63,6 +69,7 @@ function createChart(labels, data) {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         x: { title: { display: true, text: "Time" } },
         y: { title: { display: true, text: "Carbon Intensity" } },
@@ -71,20 +78,19 @@ function createChart(labels, data) {
   });
 }
 
-// Event listener for country selection
+// **Event Listener for Country Selection**
 countrySelector.addEventListener("change", (event) => {
   const selectedCountry = event.target.value;
   updateChart(selectedCountry);
 });
 
-// Toggle Sections (Help & Info)
+// **Toggle Help & Info Sections**
 infoToggle.addEventListener("click", () => {
   infoSection.classList.toggle("hidden");
 });
-
 helpToggle.addEventListener("click", () => {
   helpSection.classList.toggle("hidden");
 });
 
-// Initialize with Germany's data
+// **Initialize with Germany's Data**
 updateChart("DE");
