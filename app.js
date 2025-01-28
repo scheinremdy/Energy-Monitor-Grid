@@ -1,4 +1,4 @@
-const apiKey = '9549d8982c8243d9a107adfd786a43c9'
+const apiKey = '9549d8982c8243d9a107adfd786a43c9';
 const searchButton = document.getElementById('search-button');
 const recipeCards = document.getElementById('recipe-cards');
 const recipeModal = document.getElementById('recipe-modal');
