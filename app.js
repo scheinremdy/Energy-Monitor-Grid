@@ -1,103 +1,104 @@
-// Spoonacular API key
-const API_KEY = '9549d8982c8243d9a107adfd786a43c9';
-const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=`;
+const apiKey = "9549d8982c8243d9a107adfd786a43c9";  // Your API key
+let language = "en"; // Default language
 
-// DOM Elements
-const searchButton = document.getElementById('search-button');
-const searchInput = document.getElementById('search-input');
-const recipeContainer = document.getElementById('recipe-container');
-const recommendationsContainer = document.getElementById('recommendations-container');
-const favoritesContainer = document.getElementById('favorites-container');
-const toggleLangButton = document.getElementById('toggle-lang-button');
-const appTitle = document.getElementById('app-title');
-const introText = document.getElementById('intro-text');
-const footerText = document.getElementById('footer-text');
-const recipeModal = document.getElementById('recipe-modal');
-const modalTitle = document.getElementById('modal-title');
-const modalIngredients = document.getElementById('modal-ingredients');
-const modalInstructions = document.getElementById('modal-instructions');
-const closeBtn = document.getElementsByClassName('close-btn')[0];
+const recipesContainer = document.getElementById("recipes-container");
+const searchInput = document.getElementById("search-input");
+const recipeModal = document.getElementById("recipe-modal");
+const toggleLangButton = document.getElementById("toggle-lang");
 
-// Search Button Listener
-searchButton.addEventListener('click', searchRecipes);
+let recipesData = [];  // To store fetched recipes
 
-// Toggle Language Button Listener
-toggleLangButton.addEventListener('click', toggleLanguage);
+// Fetch Recipes from API
+async function fetchRecipes(query = '') {
+    const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${query}&number=10`;
 
-// Search Recipes Function
-async function searchRecipes() {
-  const query = searchInput.value.trim();
-  if (!query) return;
-
-  const response = await fetch(`${apiUrl}${query}`);
-  const data = await response.json();
-
-  if (data.results.length === 0) {
-    alert('No recipes found!');
-    return;
-  }
-
-  displayRecipes(data.results);
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        recipesData = data.results;
+        displayRecipes(recipesData);
+    } catch (error) {
+        console.error('Error fetching recipes:', error);
+    }
 }
 
-// Display Recipes
+// Display Recipe Cards
 function displayRecipes(recipes) {
-  recipeContainer.innerHTML = '';
-  recipes.forEach(recipe => {
-    const recipeCard = document.createElement('div');
-    recipeCard.classList.add('recipe-card');
-    recipeCard.innerHTML = `
-      <img src="${recipe.image}" alt="${recipe.title}">
-      <h3>${recipe.title}</h3>
-      <p>Ready in ${recipe.readyInMinutes} minutes</p>
-      <button onclick="openRecipeModal(${recipe.id})">View Recipe</button>
-    `;
-    recipeContainer.appendChild(recipeCard);
-  });
-
-  // Show recommendations (for demo purposes, we'll show a static list)
-  const recommendations = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
-  recommendationsContainer.innerHTML = '';
-  recommendations.forEach(rec => {
-    const recCard = document.createElement('div');
-    recCard.classList.add('recipe-card');
-    recCard.innerHTML = `
-      <h3>${rec}</h3>
-      <button>Explore</button>
-    `;
-    recommendationsContainer.appendChild(recCard);
-  });
+    recipesContainer.innerHTML = '';
+    recipes.forEach(recipe => {
+        const card = document.createElement("div");
+        card.classList.add("recipe-card");
+        card.innerHTML = `
+            <img src="https://spoonacular.com/recipeImages/${recipe.id}-480x360.jpg" alt="${recipe.title}">
+            <div class="recipe-card-content">
+                <h3 class="recipe-title">${recipe.title}</h3>
+            </div>
+        `;
+        card.onclick = () => showRecipeDetails(recipe.id);
+        recipesContainer.appendChild(card);
+    });
 }
 
-// Open Recipe Modal
-async function openRecipeModal(recipeId) {
-  const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${API_KEY}`);
-  const recipe = await response.json();
-
-  modalTitle.innerText = recipe.title;
-  modalIngredients.innerHTML = `<strong>Ingredients:</strong><ul>${recipe.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('')}</ul>`;
-  modalInstructions.innerHTML = `<strong>Instructions:</strong><p>${recipe.instructions}</p>`;
-
-  recipeModal.style.display = 'flex';
+// Show Recipe Details in Modal
+async function showRecipeDetails(recipeId) {
+    const apiUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
+    
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        document.getElementById("recipe-title").textContent = data.title;
+        document.getElementById("recipe-image").src = data.image;
+        document.getElementById("recipe-details").innerHTML = `
+            <p><strong>Time:</strong> ${data.readyInMinutes} minutes</p>
+            <p><strong>Servings:</strong> ${data.servings}</p>
+        `;
+        document.getElementById("recipe-ingredients").innerHTML = `
+            <h3>Ingredients</h3>
+            <ul>${data.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('')}</ul>
+        `;
+        document.getElementById("recipe-instructions").innerHTML = `
+            <h3>Instructions</h3>
+            <p>${data.instructions}</p>
+        `;
+        recipeModal.style.display = "block";
+    } catch (error) {
+        console.error('Error fetching recipe details:', error);
+    }
 }
 
-// Close Recipe Modal
-closeBtn.addEventListener('click', () => {
-  recipeModal.style.display = 'none';
-});
+// Close Modal
+function closeModal() {
+    recipeModal.style.display = "none";
+}
 
 // Toggle Language
 function toggleLanguage() {
-  const currentLang = toggleLangButton.innerText;
-  if (currentLang === 'Switch to Deutsch') {
-    toggleLangButton.innerText = 'Switch to English';
-    appTitle.innerText = 'Rezept Finder & Mahlzeiten Planer';
-    introText.innerText = 'Finden Sie Ihre Lieblingsgerichte hier! Geben Sie Zutaten ein, die Sie zu Hause haben, und wir helfen Ihnen, köstliche Rezepte zu entdecken.';
-    footerText.innerText = 'Erstellt mit 💻 von Sunshine Remollo';
-  } else {
-    toggleLangButton.innerText = 'Switch to Deutsch';
-    appTitle.innerText = 'Recipe Finder & Meal Planner';
-    introText.innerText = 'Find your favorite meals here! Enter ingredients you have at home, and we\'ll help you discover delicious recipes.';
-    footerText.innerText = 'Created with 💻 by Sunshine Remollo';
-  }
+    if (language === "en") {
+        language = "de";
+        toggleLangButton.textContent = "Switch to English";
+        // Here you would fetch German recipes or content.
+    } else {
+        language = "en";
+        toggleLangButton.textContent = "Switch to Deutsch";
+    }
+}
+
+// Dark Mode Toggle
+document.body.classList.add("light-mode");
+
+function toggleTheme() {
+    if (document.body.classList.contains("light-mode")) {
+        document.body.classList.remove("light-mode");
+        document.body.classList.add("dark-mode");
+    } else {
+        document.body.classList.remove("dark-mode");
+        document.body.classList.add("light-mode");
+    }
+}
+
+// Initialize
+window.onload = () => {
+    fetchRecipes();
+    toggleLangButton.addEventListener('click', toggleLanguage);
+    document.getElementById("toggle-theme").addEventListener('click', toggleTheme);
 }
