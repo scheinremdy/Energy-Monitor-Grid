@@ -8,35 +8,43 @@
 </head>
 <body>
     <header>
-        <h1 id="title">Recipe Food Planner</h1>
-        <button id="languageToggle">🇩🇪 Deutsch / 🇬🇧 English</button>
+        <h1>Recipe Food Planner</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Dietary Options</a></li>
+                <li><a href="#">Cuisines</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="language-toggle">
+            <button id="en">EN</button>
+            <button id="de">DE</button>
+        </div>
     </header>
-    
-    <nav>
-        <select id="mealType">
-            <option value="breakfast">Breakfast</option>
-            <option value="lunch">Lunch</option>
-            <option value="dinner">Dinner</option>
-            <option value="snack">Snack</option>
-        </select>
-        <select id="diet">
-            <option value="all">All</option>
-            <option value="vegetarian">Vegetarian</option>
-            <option value="pescatarian">Pescatarian</option>
-        </select>
-        <select id="cuisine">
-            <option value="asian">Asian</option>
-            <option value="european">European</option>
-            <option value="american">American</option>
-        </select>
-        <button id="searchBtn">Find Recipes</button>
-    </nav>
-    
-    <section id="recommendations">
-        <h2>Recommended Recipes</h2>
-        <div id="recipeList"></div>
-    </section>
-    
+
+    <main>
+        <section id="categories">
+            <h2>Choose a Category</h2>
+            <ul>
+                <li><button class="category-btn">Breakfast</button></li>
+                <li><button class="category-btn">Lunch</button></li>
+                <li><button class="category-btn">Dinner</button></li>
+                <li><button class="category-btn">Snacks</button></li>
+            </ul>
+        </section>
+
+        <section id="recipes">
+            <h2>Recommended Recipes</h2>
+            <div id="recipe-list"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Recipe Food Planner</p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
