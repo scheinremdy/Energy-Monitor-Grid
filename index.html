@@ -6,24 +6,37 @@
     <title>Recipe Food Planner</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100">
-    <div class="p-6 max-w-4xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-            <h1 id="title" class="text-3xl font-bold">Recipe Food Planner</h1>
-            <button id="toggle-language" class="bg-blue-500 text-white px-4 py-2 rounded">Switch to Deutsch</button>
-        </div>
-
-        <div id="meal-buttons" class="grid grid-cols-2 gap-4 mb-6">
-            <!-- Buttons will be dynamically generated -->
-        </div>
-
-        <div class="p-4 mb-6 bg-white rounded shadow">
-            <h2 class="text-xl font-semibold mb-4">Recommendations</h2>
-            <ul id="recipe-list">
-                <li>No recipes found.</li>
-            </ul>
-        </div>
-    </div>
+<body>
+    <header>
+        <h1 id="title">Recipe Food Planner</h1>
+        <button id="languageToggle">🇩🇪 Deutsch / 🇬🇧 English</button>
+    </header>
+    
+    <nav>
+        <select id="mealType">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="snack">Snack</option>
+        </select>
+        <select id="diet">
+            <option value="all">All</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="pescatarian">Pescatarian</option>
+        </select>
+        <select id="cuisine">
+            <option value="asian">Asian</option>
+            <option value="european">European</option>
+            <option value="american">American</option>
+        </select>
+        <button id="searchBtn">Find Recipes</button>
+    </nav>
+    
+    <section id="recommendations">
+        <h2>Recommended Recipes</h2>
+        <div id="recipeList"></div>
+    </section>
+    
     <script src="script.js"></script>
 </body>
 </html>
