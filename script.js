@@ -1,4 +1,4 @@
-const apiKey = 9549d8982c8243d9a107adfd786a43c9; // Replace with your Spoonacular API Key
+const apiKey = '9549d8982c8243d9a107adfd786a43c9'; 
 const recipeList = document.getElementById('recipe-list');
 const categoryButtons = document.querySelectorAll('.category-btn');
 
