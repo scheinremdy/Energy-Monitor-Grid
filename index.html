@@ -1,58 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recipe Food Planner</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Food Planner</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header>
-    <h1>Recipe Food Planner</h1>
-    <input type="text" id="search-input" placeholder="Search recipes...">
-    <button id="search-btn">Search</button>
-  </header>
+<body class="bg-gray-100">
+    <div class="p-6 max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 id="title" class="text-3xl font-bold">Recipe Food Planner</h1>
+            <button id="toggle-language" class="bg-blue-500 text-white px-4 py-2 rounded">Switch to Deutsch</button>
+        </div>
 
-  <main>
-    <section id="filters">
-      <select id="cuisine-filter">
-        <option value="">All Cuisines</option>
-        <option value="Italian">Italian</option>
-        <option value="Asian">Asian</option>
-        <option value="Mexican">Mexican</option>
-      </select>
-      <select id="meal-type-filter">
-        <option value="">All Meal Types</option>
-        <option value="Breakfast">Breakfast</option>
-        <option value="Lunch">Lunch</option>
-        <option value="Dinner">Dinner</option>
-      </select>
-      <select id="diet-filter">
-        <option value="">All Diets</option>
-        <option value="Vegetarian">Vegetarian</option>
-        <option value="Vegan">Vegan</option>
-        <option value="Gluten-free">Gluten-free</option>
-      </select>
-      <select id="difficulty-filter">
-        <option value="">All Difficulty Levels</option>
-        <option value="Easy">Easy</option>
-        <option value="Intermediate">Intermediate</option>
-      </select>
-    </section>
+        <div id="meal-buttons" class="grid grid-cols-2 gap-4 mb-6">
+            <!-- Buttons will be dynamically generated -->
+        </div>
 
-    <section id="recipes-container"></section>
-
-    <section id="recommendations">
-      <h2>Recommended for You</h2>
-      <div id="recommendation-cards"></div>
-    </section>
-  </main>
-
-  <div id="recipe-modal">
-    <div id="modal-content"></div>
-    <button id="close-modal-btn">Close</button>
-  </div>
-
-  <script src="app.js"></script>
+        <div class="p-4 mb-6 bg-white rounded shadow">
+            <h2 class="text-xl font-semibold mb-4">Recommendations</h2>
+            <ul id="recipe-list">
+                <li>No recipes found.</li>
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
