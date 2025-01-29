@@ -8,76 +8,49 @@
 </head>
 <body>
   <header>
-    <div class="header-content">
-      <h1>Recipe Food Planner</h1>
-      <button id="dark-mode-toggle">🌙</button>
-    </div>
+    <h1>Recipe Food Planner</h1>
+    <input type="text" id="search-input" placeholder="Search recipes...">
+    <button id="search-btn">Search</button>
   </header>
 
   <main>
-    <!-- Search Section -->
-    <section id="search-section">
-      <input type="text" id="search-input" placeholder="Search for recipes...">
-      <button id="search-btn">Search</button>
-
-      <!-- Advanced Filters -->
-      <div id="filters">
-        <select id="cuisine-filter">
-          <option value="">All Cuisines</option>
-          <option value="Italian">Italian</option>
-          <option value="Asian">Asian</option>
-          <option value="Mexican">Mexican</option>
-          <option value="American">American</option>
-        </select>
-
-        <select id="meal-type-filter">
-          <option value="">All Meals</option>
-          <option value="Breakfast">Breakfast</option>
-          <option value="Lunch">Lunch</option>
-          <option value="Dinner">Dinner</option>
-          <option value="Snack">Snack</option>
-        </select>
-
-        <select id="diet-filter">
-          <option value="">All Diets</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Vegan">Vegan</option>
-          <option value="Gluten-free">Gluten-Free</option>
-        </select>
-
-        <select id="difficulty-filter">
-          <option value="">All Difficulties</option>
-          <option value="Easy">Easy</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
-        </select>
-      </div>
+    <section id="filters">
+      <select id="cuisine-filter">
+        <option value="">All Cuisines</option>
+        <option value="Italian">Italian</option>
+        <option value="Asian">Asian</option>
+        <option value="Mexican">Mexican</option>
+      </select>
+      <select id="meal-type-filter">
+        <option value="">All Meal Types</option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+      </select>
+      <select id="diet-filter">
+        <option value="">All Diets</option>
+        <option value="Vegetarian">Vegetarian</option>
+        <option value="Vegan">Vegan</option>
+        <option value="Gluten-free">Gluten-free</option>
+      </select>
+      <select id="difficulty-filter">
+        <option value="">All Difficulty Levels</option>
+        <option value="Easy">Easy</option>
+        <option value="Intermediate">Intermediate</option>
+      </select>
     </section>
 
-    <!-- Recipe Display -->
-    <section id="recipes-container">
-      <!-- Dynamic Recipe Cards -->
-    </section>
+    <section id="recipes-container"></section>
 
-    <!-- Recommendations Section -->
     <section id="recommendations">
       <h2>Recommended for You</h2>
-      <div id="recommendation-cards">
-        <!-- Dynamic Recommendations -->
-      </div>
+      <div id="recommendation-cards"></div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Recipe Food Planner | Crafted with ❤️</p>
-  </footer>
-
-  <!-- Recipe Modal -->
   <div id="recipe-modal">
-    <div id="modal-content">
-      <!-- Dynamic Recipe Details -->
-    </div>
-    <button id="close-modal-btn">&times;</button>
+    <div id="modal-content"></div>
+    <button id="close-modal-btn">Close</button>
   </div>
 
   <script src="app.js"></script>
