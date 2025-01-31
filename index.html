@@ -6,28 +6,40 @@
     <title>Real-Time Energy Monitor Grid</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="script.js"></script>
 </head>
 <body>
     <header>
-        <h1>Energy Monitor Grid</h1>
-        <button id="theme-toggle">🌙</button>
+        <h1 id="title">Energy Monitor Grid</h1>
+        <div>
+            <button id="lang-toggle">🇬🇧 / 🇩🇪</button>
+            <button id="theme-toggle">🌙</button>
+        </div>
     </header>
     <main>
         <section class="info">
-            <h2>Live Energy Consumption</h2>
-            <p>Monitor real-time energy usage for small businesses.</p>
+            <h2 id="live-title">Live Energy Consumption</h2>
+            <p id="live-desc">Monitor real-time energy usage for small businesses.</p>
         </section>
         <section class="grid-container">
             <canvas id="energyChart"></canvas>
         </section>
         <section class="details">
-            <h2>Usage Statistics</h2>
+            <h2 id="usage-title">Usage Statistics</h2>
             <ul id="usage-list"></ul>
+        </section>
+        <section class="info-terminal">
+            <h2 id="info-title">Information Terminal</h2>
+            <p id="info-content">Real-time updates on energy use trends.</p>
+        </section>
+        <section class="help">
+            <h2 id="help-title">Help & FAQ</h2>
+            <button id="help-button">❓</button>
+            <p id="help-content" style="display:none;">This system tracks real-time energy usage from Germany and the Philippines. Click on any section for details.</p>
         </section>
     </main>
     <footer>
         <p>&copy; 2025 Energy Grid Monitor | Designed for Small Businesses</p>
     </footer>
-    <script src="script.js"></script>
 </body>
 </html>
