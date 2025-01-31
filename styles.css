@@ -14,12 +14,13 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-button {
+.controls button {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
     color: white;
+    margin: 0 5px;
 }
 .grid-container {
     width: 80%;
@@ -30,13 +31,12 @@ canvas {
     width: 100% !important;
     height: auto !important;
 }
+.hidden {
+    display: none;
+}
 footer {
     margin-top: 20px;
     padding: 10px;
     background: #007bff;
-    color: white;
-}
-.dark-mode {
-    background-color: #333;
     color: white;
 }
