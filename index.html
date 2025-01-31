@@ -3,47 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Energy Monitor Grid</title>
+    <title>Energy Monitor Grid</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
 </head>
 <body>
     <header>
         <h1 id="title">Energy Monitor Grid</h1>
         <div class="controls">
-            <button id="theme-toggle">🌙 Theme</button>
-            <button id="language-toggle">🌐 Language</button>
-            <button id="help-toggle">❓ Help</button>
+            <button id="language-toggle">🇩🇪/🇬🇧</button>
+            <button id="theme-toggle">🌙</button>
+            <button id="info-toggle">ℹ️</button>
         </div>
     </header>
+
     <main>
         <section class="info">
-            <h2 id="about-heading">About This System</h2>
-            <p id="about-description">
-                The Energy Monitor Grid is designed to track, manage, and optimize energy consumption within specific regions. By incorporating technologies such as smart meters, sensors, and data analytics tools, it monitors electricity usage, identifies inefficiencies, and provides real-time data. This system is applicable to various sectors, including residential, industrial, and public grids, playing a crucial role in modernizing energy infrastructure.
-            </p>
+            <h2 id="info-title">Live Energy Consumption</h2>
+            <p id="info-text">Monitor real-time energy usage for Germany and the Philippines.</p>
         </section>
+
         <section class="grid-container">
             <canvas id="energyChart"></canvas>
         </section>
+
         <section class="details">
-            <h2 id="usage-heading">Usage Statistics</h2>
+            <h2 id="usage-title">Usage Statistics</h2>
             <ul id="usage-list"></ul>
         </section>
-        <section id="help-section" class="hidden">
-            <h2 id="help-heading">How to Use</h2>
-            <p id="help-description">
-                - Click the <strong>Theme</strong> button to switch between light and dark modes.<br>
-                - Click the <strong>Language</strong> button to toggle between English and German.<br>
-                - View real-time energy consumption on the interactive chart.<br>
-                - Click the <strong>Help</strong> button again to close this section.
-            </p>
-        </section>
     </main>
+
+    <div id="info-box" class="hidden">
+        <h2 id="help-title">What is the Energy Monitor Grid?</h2>
+        <p id="help-description">
+            An Energy Monitor Grid is a system used to track, manage, and optimize energy consumption within a specific area.
+            It provides real-time data to help identify inefficiencies and improve energy use.
+        </p>
+        <h3 id="help-howto-title">How to Use:</h3>
+        <ul id="help-howto">
+            <li>🔄 The chart updates in real-time with energy data from Germany and the Philippines.</li>
+            <li>🌙 Click the dark mode button to toggle themes.</li>
+            <li>🇩🇪 Click the language button to switch between English and German.</li>
+            <li>ℹ️ Click this help button again to close this info box.</li>
+        </ul>
+    </div>
+
     <footer>
-        <p>&copy; 2025 Energy Grid Monitor | Designed for Small Businesses</p>
+        <p>&copy; 2025 Energy Grid Monitor | Real-time data for smart energy use</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
