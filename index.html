@@ -6,10 +6,11 @@
     <title>Real-Time Energy Monitor Grid</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
 </head>
 <body>
     <header>
-        <h1>Energy Monitor Grid</h1>
+        <h1 id="title">Energy Monitor Grid</h1>
         <div class="controls">
             <button id="theme-toggle">🌙 Theme</button>
             <button id="language-toggle">🌐 Language</button>
@@ -18,22 +19,26 @@
     </header>
     <main>
         <section class="info">
-            <h2>About This System</h2>
-            <p>An Energy Monitor Grid Design is a system used to track, manage, and optimize energy consumption within a specific area or grid. The design incorporates various technologies, such as smart meters, sensors, and data analytics tools, to monitor electricity use, identify inefficiencies, and provide real-time data. This system can be applied to a wide range of areas, including residential, industrial, or public grids, and plays a crucial role in modernizing energy infrastructure.</p>
+            <h2 id="about-heading">About This System</h2>
+            <p id="about-description">
+                The Energy Monitor Grid is designed to track, manage, and optimize energy consumption within specific regions. By incorporating technologies such as smart meters, sensors, and data analytics tools, it monitors electricity usage, identifies inefficiencies, and provides real-time data. This system is applicable to various sectors, including residential, industrial, and public grids, playing a crucial role in modernizing energy infrastructure.
+            </p>
         </section>
         <section class="grid-container">
             <canvas id="energyChart"></canvas>
         </section>
         <section class="details">
-            <h2>Usage Statistics</h2>
+            <h2 id="usage-heading">Usage Statistics</h2>
             <ul id="usage-list"></ul>
         </section>
         <section id="help-section" class="hidden">
-            <h2>How to Use</h2>
-            <p>- Click the <strong>Theme</strong> button to switch between light and dark mode.</p>
-            <p>- Click the <strong>Language</strong> button to toggle between English and German.</p>
-            <p>- View real-time energy consumption on the interactive chart.</p>
-            <p>- Click the <strong>Help</strong> button again to close this section.</p>
+            <h2 id="help-heading">How to Use</h2>
+            <p id="help-description">
+                - Click the <strong>Theme</strong> button to switch between light and dark modes.<br>
+                - Click the <strong>Language</strong> button to toggle between English and German.<br>
+                - View real-time energy consumption on the interactive chart.<br>
+                - Click the <strong>Help</strong> button again to close this section.
+            </p>
         </section>
     </main>
     <footer>
