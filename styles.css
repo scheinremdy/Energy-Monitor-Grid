@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 header {
     background: #007bff;
     color: white;
@@ -14,39 +15,63 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-.controls button {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    color: white;
-    margin: 0 5px;
+
+.controls {
+    display: flex;
+    gap: 10px;
 }
+
+button, select {
+    cursor: pointer;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    background: #0056b3;
+    color: white;
+}
+
 .grid-container {
     width: 80%;
     margin: auto;
     padding: 20px;
 }
+
 canvas {
     width: 100% !important;
     height: auto !important;
 }
-.hidden {
-    display: none;
-}
+
 footer {
     margin-top: 20px;
     padding: 10px;
     background: #007bff;
     color: white;
 }
+
+#help-section {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
 .dark-mode {
-    background-color: #333;
-    color: #f4f4f4;
+    background-color: #222;
+    color: #fff;
 }
-.dark-mode header {
-    background: #555;
-}
-.dark-mode footer {
-    background: #555;
+
+.dark-mode header, .dark-mode footer {
+    background: #0056b3;
 }
