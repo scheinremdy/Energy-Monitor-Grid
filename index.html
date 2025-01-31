@@ -6,23 +6,26 @@
     <title>Energy Monitor Grid</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
 </head>
 <body>
     <header>
         <h1 id="title">Energy Monitor Grid</h1>
         <div class="controls">
-            <button id="language-toggle">🇩🇪/🇬🇧</button>
+            <select id="language-toggle">
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+            </select>
+            <button id="help-button">ℹ️ Help</button>
             <button id="theme-toggle">🌙</button>
-            <button id="info-toggle">ℹ️</button>
         </div>
     </header>
 
     <main>
         <section class="info">
-            <h2 id="info-title">Live Energy Consumption</h2>
-            <p id="info-text">Monitor real-time energy usage for Germany and the Philippines.</p>
+            <h2 id="live-title">Live Energy Consumption</h2>
+            <p id="description">
+                Monitoring real-time energy usage for Germany 🇩🇪 and the Philippines 🇵🇭.
+            </p>
         </section>
 
         <section class="grid-container">
@@ -30,28 +33,25 @@
         </section>
 
         <section class="details">
-            <h2 id="usage-title">Usage Statistics</h2>
+            <h2 id="stats-title">Usage Statistics</h2>
             <ul id="usage-list"></ul>
         </section>
     </main>
 
-    <div id="info-box" class="hidden">
-        <h2 id="help-title">What is the Energy Monitor Grid?</h2>
-        <p id="help-description">
-            An Energy Monitor Grid is a system used to track, manage, and optimize energy consumption within a specific area.
-            It provides real-time data to help identify inefficiencies and improve energy use.
+    <div id="help-section" class="hidden">
+        <h2 id="help-title">How to Use This Monitor</h2>
+        <p id="help-text">
+            This system displays live energy consumption data from Germany and the Philippines.
+            - The graph updates every 10 seconds with new data.
+            - Click the 🌙 button to toggle dark mode.
+            - Switch languages between English and German using the dropdown menu.
+            - Click the ℹ️ button to show or hide this help section.
         </p>
-        <h3 id="help-howto-title">How to Use:</h3>
-        <ul id="help-howto">
-            <li>🔄 The chart updates in real-time with energy data from Germany and the Philippines.</li>
-            <li>🌙 Click the dark mode button to toggle themes.</li>
-            <li>🇩🇪 Click the language button to switch between English and German.</li>
-            <li>ℹ️ Click this help button again to close this info box.</li>
-        </ul>
+        <button id="close-help">Close</button>
     </div>
 
     <footer>
-        <p>&copy; 2025 Energy Grid Monitor | Real-time data for smart energy use</p>
+        <p>&copy; 2025 Energy Monitor Grid | Designed for Smart Monitoring</p>
     </footer>
 
     <script src="script.js"></script>
