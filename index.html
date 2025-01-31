@@ -3,35 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Monitor Grid</title>
+    <title>Real-Time Energy Monitor Grid</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
         <h1>Energy Monitor Grid</h1>
-        <button id="help-btn">Help</button>
+        <button id="theme-toggle">🌙</button>
     </header>
     <main>
         <section class="info">
-            <h2>Real-Time Energy Usage</h2>
-            <p>Monitor energy consumption for small businesses in real-time.</p>
+            <h2>Live Energy Consumption</h2>
+            <p>Monitor real-time energy usage for small businesses.</p>
         </section>
         <section class="grid-container">
             <canvas id="energyChart"></canvas>
         </section>
         <section class="details">
-            <h2>Usage Details</h2>
+            <h2>Usage Statistics</h2>
             <ul id="usage-list"></ul>
         </section>
     </main>
-    <div id="help-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>How to Use</h2>
-            <p>This dashboard shows real-time energy usage for small businesses. The chart updates dynamically every few seconds.</p>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2025 Energy Grid Monitor | Designed for Small Businesses</p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
