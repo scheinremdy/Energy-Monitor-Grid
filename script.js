@@ -1,29 +1,37 @@
-// script.js
+/* script.js */
 document.addEventListener("DOMContentLoaded", () => {
-    const helpBtn = document.getElementById("help-btn");
-    const modal = document.getElementById("help-modal");
-    const closeBtn = document.querySelector(".close");
-    
-    helpBtn.addEventListener("click", () => {
-        modal.style.display = "block";
+    const ctx = document.getElementById("energyChart").getContext("2d");
+    const energyChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00"],
+            datasets: [{
+                label: "Energy Usage (kWh)",
+                data: [10, 20, 30, 25, 15, 35],
+                borderColor: "#007bff",
+                backgroundColor: "rgba(0, 123, 255, 0.2)",
+                fill: true,
+            }],
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { display: true } }
+            }
+        }
     });
-    
-    closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-    
-    setInterval(updateEnergyData, 5000);
-});
 
-function updateEnergyData() {
-    const energyChart = document.getElementById("energyChart").getContext("2d");
-    const data = {
-        labels: ["Office A", "Shop B", "Factory C"],
-        datasets: [{
-            label: "Energy Usage (kWh)",
-            data: [Math.random() * 100, Math.random() * 100, Math.random() * 100],
-            backgroundColor: ["red", "blue", "green"],
-        }],
-    };
-    new Chart(energyChart, { type: "bar", data });
-}
+    // Simulating real-time data updates
+    setInterval(() => {
+        const newData = Math.floor(Math.random() * 50) + 10;
+        energyChart.data.datasets[0].data.shift();
+        energyChart.data.datasets[0].data.push(newData);
+        energyChart.update();
+    }, 3000);
+
+    // Theme Toggle
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
+});
