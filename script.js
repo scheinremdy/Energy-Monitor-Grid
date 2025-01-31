@@ -23,20 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Simulating real-time data updates
     setInterval(() => {
-        fetchRealTimeData();
-    }, 5000);
-
-    function fetchRealTimeData() {
-        fetch("https://api.example.com/energy?country=DE") // Replace with a real API
-            .then(response => response.json())
-            .then(data => {
-                const newData = data.value;
-                energyChart.data.datasets[0].data.shift();
-                energyChart.data.datasets[0].data.push(newData);
-                energyChart.update();
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    }
+        const newData = Math.floor(Math.random() * 50) + 10;
+        energyChart.data.datasets[0].data.shift();
+        energyChart.data.datasets[0].data.push(newData);
+        energyChart.update();
+    }, 3000);
 
     // Theme Toggle
     document.getElementById("theme-toggle").addEventListener("click", () => {
@@ -44,30 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Language Toggle
-    document.getElementById("lang-toggle").addEventListener("click", () => {
-        toggleLanguage();
+    document.getElementById("language-toggle").addEventListener("click", () => {
+        alert("Language switching functionality coming soon.");
     });
 
-    function toggleLanguage() {
-        const elements = {
-            title: ["Energy Monitor Grid", "Energieüberwachungsnetz"],
-            liveTitle: ["Live Energy Consumption", "Live-Energieverbrauch"],
-            liveDesc: ["Monitor real-time energy usage for small businesses.", "Überwachen Sie den Echtzeit-Energieverbrauch für kleine Unternehmen."],
-            usageTitle: ["Usage Statistics", "Nutzungsstatistiken"],
-            infoTitle: ["Information Terminal", "Informationsterminal"],
-            infoContent: ["Real-time updates on energy use trends.", "Echtzeitaktualisierungen zu Energieverbrauchstrends."],
-            helpTitle: ["Help & FAQ", "Hilfe & FAQ"]
-        };
-        const lang = document.documentElement.lang === "en" ? "de" : "en";
-        document.documentElement.lang = lang;
-        Object.keys(elements).forEach(id => {
-            document.getElementById(id).textContent = elements[id][lang === "en" ? 0 : 1];
-        });
-    }
-
-    // Help Button Toggle
-    document.getElementById("help-button").addEventListener("click", () => {
-        const helpContent = document.getElementById("help-content");
-        helpContent.style.display = helpContent.style.display === "none" ? "block" : "none";
+    // Help Toggle
+    document.getElementById("help-toggle").addEventListener("click", () => {
+        document.getElementById("help-section").classList.toggle("hidden");
     });
 });
