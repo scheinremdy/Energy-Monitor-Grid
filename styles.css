@@ -1,35 +1,39 @@
+/* styles.css */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 header {
-    background-color: #007bff;
+    background: #007bff;
     color: white;
-    padding: 1rem;
-}
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-}
-.modal-content {
-    background: white;
     padding: 20px;
-    margin: 10% auto;
-    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.hidden {
-    display: none;
+button#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+.grid-container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
 }
