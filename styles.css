@@ -1,77 +1,45 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     color: #333;
     text-align: center;
     margin: 0;
-    padding: 0;
+    padding: 20px;
 }
 
 header {
-    background: #007bff;
-    color: white;
-    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #222;
+    color: white;
+    padding: 15px;
 }
 
-.controls {
-    display: flex;
-    gap: 10px;
-}
-
-button, select {
-    cursor: pointer;
-    padding: 8px;
+.controls button {
+    background: #444;
+    color: white;
     border: none;
+    padding: 10px;
+    cursor: pointer;
     border-radius: 5px;
 }
 
-button {
-    background: #0056b3;
-    color: white;
-}
-
-.grid-container {
-    width: 80%;
-    margin: auto;
+.chart-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 10px;
     padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 canvas {
     width: 100% !important;
-    height: auto !important;
-}
-
-footer {
-    margin-top: 20px;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-}
-
-#help-section {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    display: none;
-    border-radius: 10px;
+    height: 500px !important;
 }
 
 .hidden {
     display: none;
-}
-
-.dark-mode {
-    background-color: #222;
-    color: #fff;
-}
-
-.dark-mode header, .dark-mode footer {
-    background: #0056b3;
 }
