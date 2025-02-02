@@ -3,56 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Monitor Grid</title>
+    <title>Real-Time Energy Monitor</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <h1 id="title">Energy Monitor Grid</h1>
+        <h1 id="title">Real-Time Energy Monitor</h1>
         <div class="controls">
-            <select id="language-toggle">
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-            </select>
-            <button id="help-button">ℹ️ Help</button>
-            <button id="theme-toggle">🌙</button>
+            <button id="theme-toggle">🌙 Dark Mode</button>
+            <button id="language-toggle">Deutsch</button>
+            <button id="help-toggle">ℹ️ Help</button>
         </div>
     </header>
 
-    <main>
-        <section class="info">
-            <h2 id="live-title">Live Energy Consumption</h2>
-            <p id="description">
-                Monitoring real-time energy usage for Germany 🇩🇪 and the Philippines 🇵🇭.
-            </p>
-        </section>
+    <section class="info">
+        <h2 id="description">Live energy consumption updates for Germany and the Philippines.</h2>
+    </section>
 
-        <section class="grid-container">
-            <canvas id="energyChart"></canvas>
-        </section>
-
-        <section class="details">
-            <h2 id="stats-title">Usage Statistics</h2>
-            <ul id="usage-list"></ul>
-        </section>
-    </main>
-
-    <div id="help-section" class="hidden">
-        <h2 id="help-title">How to Use This Monitor</h2>
-        <p id="help-text">
-            This system displays live energy consumption data from Germany and the Philippines.
-            - The graph updates every 10 seconds with new data.
-            - Click the 🌙 button to toggle dark mode.
-            - Switch languages between English and German using the dropdown menu.
-            - Click the ℹ️ button to show or hide this help section.
-        </p>
-        <button id="close-help">Close</button>
+    <div class="buttons">
+        <button id="show-germany">🇩🇪 Show Germany</button>
+        <button id="show-philippines">🇵🇭 Show Philippines</button>
+        <button id="show-both">🌎 Show Both</button>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Energy Monitor Grid | Designed for Smart Monitoring</p>
-    </footer>
+    <div class="chart-container">
+        <canvas id="energyChart"></canvas>
+    </div>
+
+    <button id="download-btn">⬇️ Download Data (CSV)</button>
+
+    <div id="help-section" class="hidden">
+        <h3>How to Use</h3>
+        <p>📊 This website provides real-time updates on energy consumption.</p>
+        <p>💡 Click on the buttons to view data for Germany, the Philippines, or both.</p>
+        <p>⏳ The graph updates automatically every minute.</p>
+        <p>📥 Click 'Download' to save the data as a CSV file.</p>
+    </div>
 
     <script src="script.js"></script>
 </body>
